@@ -1,17 +1,14 @@
-import { CalendarDays, MapPin, Star, Zap } from 'lucide-react';
+import { CalendarDays, MapPin, Zap } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '../design/components';
-import { formatRating } from '../design/format';
 import { useFormat } from '../design/useFormat';
-import { workerTotal } from '../vacancies/logic';
 import { useWorker } from './WorkerContext';
 
 /**
- * Alerta de vacante recomendada (sección 6.2 del documento, adaptada a vacantes): aparece sobre cualquier
- * pantalla cuando se publica una vacante cerca del trabajador disponible. Las vacantes no vencen como las
- * ofertas automáticas, así que no hay cuenta regresiva: se postula, la ve o la deja para después.
+ * Mensaje emergente de vacante nueva: aparece sobre cualquier pantalla cuando el backend avisa (por WebSocket)
+ * que se publicó una vacante dentro del radio del trabajador. Se postula, la ve o la deja para después.
  */
 export function VacancyAlert() {
   const { alert, dismissAlert } = useWorker();
@@ -56,7 +53,7 @@ function Modal({ onClose }: { onClose: () => void }) {
     setBusy(true);
     setError(null);
     try {
-      await apply(alert);
+      await apply(v.id);
     } catch (e) {
       setError(errorText(e));
       setBusy(false);
@@ -72,19 +69,14 @@ function Modal({ onClose }: { onClose: () => void }) {
         </div>
         <div className="tw-modal-body">
           <h2 id="tw-alert-title">{v.title}</h2>
-          <div className="tw-company">
-            <span>{v.employer.name}</span>
-            {v.employer.ratingCount > 0 && (
-              <>· <Star size={14} className="star" fill="currentColor" aria-hidden="true" /><b>{formatRating(v.employer.ratingAvg)}</b></>
-            )}
-          </div>
+          <div className="tw-company"><span>{v.employer.name}</span></div>
           <div className="tw-pills">
             <span className="tw-pill"><MapPin size={16} aria-hidden="true" />{f.km(alert.distanceKm)}</span>
             <span className="tw-pill"><CalendarDays size={16} aria-hidden="true" />{t('vac.daysCount', { count: v.days })} · {f.day(v.startDate, v.timezone)}</span>
           </div>
           <div className="tw-amount-row">
             <span>{f.hours(v)}</span>
-            <strong>{f.money(workerTotal(v), v.currency, v.moneyScale)}</strong>
+            <strong>{f.money(v.payMinor, v.currency, v.moneyScale)}</strong>
           </div>
           {error && <p className="tw-inline-error" role="alert">{error}</p>}
           <div className="tw-two">

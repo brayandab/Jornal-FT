@@ -1,37 +1,48 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ApiError } from '../api/client';
 import { api } from '../api/endpoints';
 import type { WorkerProfile } from '../api/types';
+import { useTopic } from '../lib/realtime';
 import { centerOf } from '../lib/regions';
 import { useShell } from '../shell/ShellContext';
 import { useApp } from '../state/AppContext';
-import { useVacancyQuery, vacancyErrorCode } from '../vacancies/hooks';
-import { vacancyApi } from '../vacancies/mockStore';
-import type { WorkerExtra } from '../vacancies/mockStore';
-import type { Applicant, LatLng, NearbyVacancy } from '../vacancies/types';
+import { vacancyApi } from '../vacancies/api';
+import { friendlyError } from '../api/errors';
+import { useVacancyQuery } from '../vacancies/hooks';
+import { distanceTo, matchFor } from '../vacancies/logic';
+import type { Application, LatLng, NearbyVacancy, Vacancy } from '../vacancies/types';
+import { getExtra } from '../vacancies/workerExtra';
+import type { WorkerExtra } from '../vacancies/workerExtra';
 
 interface WorkerState {
   profile: WorkerProfile | null;
   profileError: ApiError | null;
+  /** Trabajador nuevo: aún no creó su perfil (servicios, radio y ubicación). */
+  profileMissing: boolean;
   reloadProfile: () => Promise<void>;
   setAvailable: (v: boolean) => Promise<void>;
   availabilityBusy: boolean;
   base: LatLng;
+  hasBase: boolean;
   radiusKm: number;
   /** Vacantes abiertas dentro del radio, de la más recomendada a la menos. */
   nearby: NearbyVacancy[];
   nearbyLoading: boolean;
   nearbyError: ApiError | null;
   reloadNearby: () => void;
-  apply: (nv: NearbyVacancy) => Promise<void>;
+  toNearby: (v: Vacancy) => NearbyVacancy;
+  apply: (vacancyId: string) => Promise<void>;
   withdraw: (vacancyId: string) => Promise<void>;
-  /** Vacante cercana nueva: abre la alerta de recomendación. */
+  attendance: (vacancyId: string, attending: boolean) => Promise<void>;
+  /** Vacante nueva cerca: la avisa el backend por WebSocket (solo a los trabajadores dentro del radio). */
   alert: NearbyVacancy | null;
   dismissAlert: () => void;
-  stats: { completed: number; earnedMinor: number; weekMinor: number } | undefined;
+  applications: Application[];
+  stats: { completed: number; earnedMinor: number; weekMinor: number };
   extra: WorkerExtra | undefined;
+  setExtra: (e: WorkerExtra) => void;
   errorText: (e: unknown) => string;
 }
 
@@ -43,61 +54,79 @@ export function WorkerProvider({ children }: { children: ReactNode }) {
   const { showToast } = useShell();
   const [profile, setProfile] = useState<WorkerProfile | null>(null);
   const [profileError, setProfileError] = useState<ApiError | null>(null);
+  const [profileMissing, setProfileMissing] = useState(false);
   const [availabilityBusy, setAvailabilityBusy] = useState(false);
   const [alert, setAlert] = useState<NearbyVacancy | null>(null);
-  const seen = useRef<Set<string> | null>(null);
+  const [extra, setExtra] = useState<WorkerExtra>();
 
-  const errorText = useCallback(
-    (e: unknown) => {
-      const code = e instanceof ApiError ? e.code ?? '' : vacancyErrorCode(e);
-      const known = ['VACANCY_NOT_OPEN', 'ALREADY_APPLIED', 'CANNOT_WITHDRAW', 'VACANCY_NOT_FOUND'];
-      if (known.includes(code)) return t(`vac.errors.${code}`);
-      if (e instanceof ApiError && e.problem.detail) return e.problem.detail;
-      if (e instanceof ApiError && e.status === 0) return t('errors.network');
-      return t('errors.generic');
-    },
-    [t],
-  );
+  useEffect(() => setExtra(user ? getExtra(user.id) : undefined), [user]);
+
+  const errorText = useCallback((e: unknown) => {
+    if (e instanceof ApiError && e.status === 0) return t('errors.network');
+    return friendlyError(e, t);
+  }, [t]);
 
   const reloadProfile = useCallback(async () => {
     try {
       setProfile(await api.workerProfile());
       setProfileError(null);
+      setProfileMissing(false);
     } catch (e) {
-      setProfileError(e as ApiError);
+      // 404 WRK001: cuenta nueva sin perfil de trabajador; no es una falla, hay que completarlo.
+      if (e instanceof ApiError && e.status === 404) {
+        setProfileMissing(true);
+        setProfileError(null);
+      } else {
+        setProfileError(e as ApiError);
+      }
     }
   }, []);
   useEffect(() => void reloadProfile(), [reloadProfile]);
 
+  const hasBase = profile?.baseLatitude != null && profile.baseLongitude != null;
   const base = useMemo<LatLng>(
-    () =>
-      profile?.baseLatitude != null && profile.baseLongitude != null
-        ? { lat: profile.baseLatitude, lng: profile.baseLongitude }
-        : centerOf(region),
-    [profile, region],
+    () => (hasBase ? { lat: profile!.baseLatitude!, lng: profile!.baseLongitude! } : centerOf(region)),
+    [hasBase, profile, region],
   );
   const radiusKm = profile?.workRadiusKm ?? 10;
   const categoryIds = useMemo(() => profile?.categories?.map((c) => c.id) ?? [], [profile]);
 
-  const nearbyQ = useVacancyQuery(
-    () => (user ? vacancyApi.nearby(user.id, base, radiusKm, categoryIds) : Promise.resolve([])),
-    [user?.id, base.lat, base.lng, radiusKm, categoryIds.join(',')],
-  );
-  const statsQ = useVacancyQuery(() => (user ? vacancyApi.workerStats(user.id) : Promise.resolve(undefined)), [user?.id]);
-  const extraQ = useVacancyQuery(() => (user ? vacancyApi.getExtra(user.id) : Promise.resolve(undefined)), [user?.id]);
-  const nearby = useMemo(() => nearbyQ.data ?? [], [nearbyQ.data]);
+  const toNearby = useCallback((v: Vacancy): NearbyVacancy => {
+    const distanceKm = distanceTo(v, base);
+    return { vacancy: v, distanceKm, match: matchFor(distanceKm, radiusKm, !!v.categoryId && categoryIds.includes(v.categoryId)) };
+  }, [base, radiusKm, categoryIds]);
 
-  // Alerta: la primera carga no cuenta; después, cada vacante cercana nueva (sin postulación) abre la recomendación.
-  useEffect(() => {
-    if (nearbyQ.loading || !nearbyQ.data) return;
-    if (seen.current === null) {
-      seen.current = new Set(nearby.map((n) => n.vacancy.id));
-      return;
+  const openQ = useVacancyQuery(() => (user ? vacancyApi.open() : Promise.resolve([])), [user?.id]);
+  const appsQ = useVacancyQuery(() => (user ? vacancyApi.myApplications() : Promise.resolve([])), [user?.id]);
+
+  const nearby = useMemo(
+    () => (openQ.data ?? []).map(toNearby).filter((n) => n.distanceKm <= radiusKm).sort((a, b) => b.match - a.match),
+    [openQ.data, toNearby, radiusKm],
+  );
+
+  const applications = useMemo(() => appsQ.data ?? [], [appsQ.data]);
+  const stats = useMemo(() => {
+    const weekAgo = Date.now() - 7 * 86_400_000;
+    let completed = 0;
+    let earnedMinor = 0;
+    let weekMinor = 0;
+    for (const a of applications) {
+      if (a.status !== 'COMPLETED') continue;
+      completed++;
+      if (a.payoutStatus !== 'PAID') continue;
+      const paid = a.paidAmountMinor ?? a.payoutMinor ?? 0;
+      earnedMinor += paid;
+      if (a.paidAt && Date.parse(a.paidAt) >= weekAgo) weekMinor += paid;
     }
-    const fresh = nearby.find((n) => !seen.current!.has(n.vacancy.id) && !n.mine);
-    nearby.forEach((n) => seen.current!.add(n.vacancy.id));
-    if (fresh && profile?.available && !alert) setAlert(fresh);
-  }, [nearby, nearbyQ.loading, nearbyQ.data, profile, alert]);
+    return { completed, earnedMinor, weekMinor };
+  }, [applications]);
+
+  // Aviso emergente: el backend solo se lo envía a quien tiene la vacante dentro de su radio.
+  useTopic(user ? `/topic/users.${user.id}` : null, (body) => {
+    const msg = body as { template?: string; vacancyId?: string | null };
+    if (msg.template !== 'vacancy.published' || !msg.vacancyId) return;
+    vacancyApi.get(msg.vacancyId).then((v) => setAlert(toNearby(v))).catch(() => undefined);
+  });
 
   const setAvailable = useCallback(
     async (v: boolean) => {
@@ -117,35 +146,27 @@ export function WorkerProvider({ children }: { children: ReactNode }) {
     [profile, showToast, errorText],
   );
 
-  const apply = useCallback(
-    async (nv: NearbyVacancy) => {
-      if (!user) return;
-      const extra = extraQ.data;
-      const applicant: Applicant = {
-        workerId: user.id, name: user.name, ratingAvg: profile?.ratingAvg ?? 0, ratingCount: profile?.ratingCount ?? 0,
-        completedJobs: statsQ.data?.completed ?? 0, bio: profile?.bio ?? '', experience: extra?.experience ?? '',
-        skills: extra?.skills ?? [], categoryIds, phone: user.phone ?? undefined, simulated: false,
-      };
-      await vacancyApi.apply(nv.vacancy.id, applicant, nv.distanceKm);
-      if (alert?.vacancy.id === nv.vacancy.id) setAlert(null);
-      showToast({ text: t('vac.applied'), to: `/vacantes/${nv.vacancy.id}`, linkText: t('vac.view') });
-    },
-    [user, profile, extraQ.data, statsQ.data, categoryIds, alert, showToast, t],
-  );
+  const apply = useCallback(async (vacancyId: string) => {
+    await vacancyApi.apply(vacancyId);
+    if (alert?.vacancy.id === vacancyId) setAlert(null);
+    showToast({ text: t('vac.applied'), to: `/vacantes/${vacancyId}`, linkText: t('vac.view') });
+  }, [alert, showToast, t]);
 
-  const withdraw = useCallback(
-    async (vacancyId: string) => {
-      if (!user) return;
-      await vacancyApi.withdraw(vacancyId, user.id);
-      showToast({ text: t('vac.withdrawn') });
-    },
-    [user, showToast, t],
-  );
+  const withdraw = useCallback(async (vacancyId: string) => {
+    await vacancyApi.withdraw(vacancyId);
+    showToast({ text: t('vac.withdrawn') });
+  }, [showToast, t]);
+
+  const attendance = useCallback(async (vacancyId: string, attending: boolean) => {
+    await vacancyApi.attendance(vacancyId, attending);
+    showToast({ text: attending ? t('vac.attendance.confirmedToast') : t('vac.attendance.declinedToast') });
+  }, [showToast, t]);
 
   const value: WorkerState = {
-    profile, profileError, reloadProfile, setAvailable, availabilityBusy, base, radiusKm,
-    nearby, nearbyLoading: nearbyQ.loading, nearbyError: nearbyQ.error, reloadNearby: nearbyQ.reload,
-    apply, withdraw, alert, dismissAlert: () => setAlert(null), stats: statsQ.data, extra: extraQ.data, errorText,
+    profile, profileError, profileMissing, reloadProfile, setAvailable, availabilityBusy, base, hasBase, radiusKm,
+    nearby, nearbyLoading: openQ.loading && !openQ.data, nearbyError: openQ.error, reloadNearby: openQ.reload, toNearby,
+    apply, withdraw, attendance, alert, dismissAlert: () => setAlert(null), applications, stats,
+    extra, setExtra, errorText,
   };
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }

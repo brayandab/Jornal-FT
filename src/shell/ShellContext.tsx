@@ -1,9 +1,10 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 import { api } from '../api/endpoints';
-import { CITY, centerOf } from '../lib/regions';
+import { useTopic } from '../lib/realtime';
 import { useApp } from '../state/AppContext';
-import { seedIfNeeded, setStoreRegion, subscribe, vacancyApi } from '../vacancies/mockStore';
+import { resetVacancyCaches } from '../vacancies/api';
+import { emitVacancyChange } from '../vacancies/events';
 import type { Employer } from '../vacancies/types';
 
 export interface Toast { text: string; to?: string; linkText?: string }
@@ -11,38 +12,26 @@ export interface Toast { text: string; to?: string; linkText?: string }
 interface ShellState {
   toast: Toast | null;
   showToast: (t: Toast) => void;
-  /** Avisos sin leer del flujo de vacantes + bandeja del backend. */
+  /** Avisos sin leer de la bandeja del backend. */
   unread: number;
   refreshUnread: () => void;
-  /** Quien contrata (persona o comercio), armado con los datos reales de la cuenta. */
+  /** Quien contrata (persona o comercio): razón social si es comercio. */
   employer: Employer | null;
-  storeReady: boolean;
 }
 
 const Ctx = createContext<ShellState | null>(null);
 
 export function ShellProvider({ children }: { children: ReactNode }) {
-  const { user, region, profile, locale } = useApp();
+  const { user, locale } = useApp();
   const [toast, setToast] = useState<Toast | null>(null);
   const [unread, setUnread] = useState(0);
-  const [storeReady, setStoreReady] = useState(false);
   const [legalName, setLegalName] = useState<string | undefined>();
-  // Antes de la primera consulta de cualquier pantalla: la capa simulada guarda por región.
-  if (region) setStoreRegion(region);
 
-  // La capa simulada guarda por región y siembra vacantes de ejemplo con el catálogo real del país.
+  // Al cambiar de idioma se vuelven a pedir las vacantes: el backend las devuelve traducidas a ese idioma.
   useEffect(() => {
-    if (!region || !profile || !user) return;
-    let alive = true;
-    api
-      .categories()
-      .then((cats) => seedIfNeeded(centerOf(region), cats, profile, CITY[region] ?? ''))
-      .catch(() => undefined)
-      .finally(() => alive && setStoreReady(true));
-    return () => {
-      alive = false;
-    };
-  }, [region, profile, user, locale]);
+    resetVacancyCaches();
+    emitVacancyChange();
+  }, [locale]);
 
   useEffect(() => {
     if (user?.rol === 'BUSINESS') api.business().then((b) => setLegalName(b.legalName)).catch(() => undefined);
@@ -50,16 +39,16 @@ export function ShellProvider({ children }: { children: ReactNode }) {
 
   const refreshUnread = useCallback(() => {
     if (!user) return;
-    Promise.all([
-      vacancyApi.notices(user.id).then((n) => n.filter((x) => !x.read).length),
-      api.inbox(50).then((n) => n.filter((x) => !x.readAt).length).catch(() => 0),
-    ]).then(([a, b]) => setUnread(a + b));
+    api.inbox(50).then((n) => setUnread(n.filter((x) => !x.readAt).length)).catch(() => undefined);
   }, [user]);
 
-  useEffect(() => {
+  useEffect(() => refreshUnread(), [refreshUnread]);
+
+  // Cada aviso que llega en vivo (vacante cercana, contratado, confirmó asistencia, pago...) refresca las pantallas.
+  useTopic(user ? `/topic/users.${user.id}` : null, () => {
     refreshUnread();
-    return subscribe(refreshUnread);
-  }, [refreshUnread, storeReady]);
+    emitVacancyChange();
+  });
 
   useEffect(() => {
     if (!toast) return;
@@ -68,19 +57,13 @@ export function ShellProvider({ children }: { children: ReactNode }) {
   }, [toast]);
 
   const employer = useMemo<Employer | null>(
-    () =>
-      user && (user.rol === 'APPLICANT' || user.rol === 'BUSINESS')
-        ? {
-            id: user.id, name: legalName ?? user.name, legalName, kind: user.rol === 'BUSINESS' ? 'BUSINESS' : 'PERSON',
-            ratingAvg: 0, ratingCount: 0, verified: user.verificationState === 'VERIFIED',
-          }
-        : null,
+    () => (user && (user.rol === 'APPLICANT' || user.rol === 'BUSINESS') ? { id: user.id, name: legalName ?? user.name } : null),
     [user, legalName],
   );
 
   const value = useMemo(
-    () => ({ toast, showToast: setToast, unread, refreshUnread, employer, storeReady }),
-    [toast, unread, refreshUnread, employer, storeReady],
+    () => ({ toast, showToast: setToast, unread, refreshUnread, employer }),
+    [toast, unread, refreshUnread, employer],
   );
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }

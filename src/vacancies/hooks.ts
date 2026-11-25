@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { ApiError } from '../api/client';
-import { subscribe } from './mockStore';
+import { onVacancyChange } from './events';
 
 /**
- * Carga datos de la capa de vacantes y los vuelve a cargar cuando cambian (en esta pestaña o en otra).
- * Cuando exista el backend, el aviso de cambio llegará por el WebSocket de notificaciones.
+ * Carga datos de vacantes y los vuelve a cargar cuando cambian: por una acción propia o por un aviso
+ * del WebSocket de notificaciones.
  */
 export function useVacancyQuery<T>(fn: () => Promise<T>, deps: unknown[]) {
   const [data, setData] = useState<T>();
@@ -12,7 +12,7 @@ export function useVacancyQuery<T>(fn: () => Promise<T>, deps: unknown[]) {
   const [loading, setLoading] = useState(true);
   const [tick, setTick] = useState(0);
 
-  useEffect(() => subscribe(() => setTick((n) => n + 1)), []);
+  useEffect(() => onVacancyChange(() => setTick((n) => n + 1)), []);
 
   useEffect(() => {
     let alive = true;
@@ -22,8 +22,8 @@ export function useVacancyQuery<T>(fn: () => Promise<T>, deps: unknown[]) {
         setData(d);
         setError(null);
       })
-      .catch((e: Error & { code?: string }) => {
-        if (alive) setError(new ApiError({ status: 404, code: e.code ?? 'ERROR', detail: '' }));
+      .catch((e: unknown) => {
+        if (alive) setError(e instanceof ApiError ? e : new ApiError({ status: 0, code: 'ERROR', detail: '' }));
       })
       .finally(() => alive && setLoading(false));
     return () => {
@@ -35,7 +35,3 @@ export function useVacancyQuery<T>(fn: () => Promise<T>, deps: unknown[]) {
   return { data, error, loading, reload: () => setTick((n) => n + 1) };
 }
 
-/** Código de error de la capa de vacantes (mismo formato que tendrá el ProblemDetail del backend). */
-export function vacancyErrorCode(e: unknown): string {
-  return (e as { code?: string })?.code ?? 'ERROR';
-}

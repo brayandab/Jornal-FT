@@ -38,7 +38,11 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [booting, setBooting] = useState(true);
 
   const region = snap.region;
-  const locale = snap.locale ?? 'en-US';
+  // Sin idioma elegido: el del navegador o del sistema (inglés si la app no lo tiene).
+  const locale = snap.locale ?? resolveUiLocale(navigator.language);
+  useEffect(() => {
+    if (!session.get().locale) session.set({ locale: resolveUiLocale(navigator.language) });
+  }, []);
   const claims = tokenClaims(snap.accessToken);
   const role = (claims?.role as Role | undefined) ?? user?.rol ?? null;
 

@@ -1,38 +1,23 @@
 import { describe, expect, it } from 'vitest';
-import { addDays, canFinalize, employerCost, endsAt, haversineKm, viability, zonedInstant } from './logic';
-import type { Applicant, Vacancy } from './types';
-
-const applicant: Applicant = {
-  workerId: 'w', name: 'Ana', ratingAvg: 5, ratingCount: 10, completedJobs: 20, bio: '', experience: '', skills: [],
-  categoryIds: ['bodega'], simulated: false,
-};
+import { addDays, hasEnded, hasStarted, haversineKm, lastDay, matchFor } from './logic';
 
 describe('reglas de vacantes', () => {
-  it('costo para la empresa: trabajadores × días × pago + comisión', () => {
-    expect(employerCost({ payPerDayMinor: 85000, days: 3, commissionBps: 1000 }, 2)).toEqual({
-      toWorkers: 510000, commission: 51000, total: 561000,
-    });
-  });
-
-  it('fechas locales en la zona del lugar', () => {
+  it('fechas locales', () => {
     expect(addDays('2026-11-30', 3)).toBe('2026-12-03');
-    expect(zonedInstant('2026-11-28', '07:00', 'America/Bogota').toISOString()).toBe('2026-11-28T12:00:00.000Z');
-    expect(zonedInstant('2026-11-28', '07:00', 'Asia/Tokyo').toISOString()).toBe('2026-11-27T22:00:00.000Z');
-    expect(endsAt({ startDate: '2026-11-28', days: 3, endTime: '15:00', timezone: 'America/Bogota' }).toISOString())
-      .toBe('2026-11-30T20:00:00.000Z');
+    expect(lastDay({ startDate: '2026-11-28', days: 3 })).toBe('2026-11-30');
   });
 
-  it('finalizar solo después de la última jornada', () => {
-    const v = { status: 'IN_PROCESS', startDate: '2026-11-28', days: 1, endTime: '15:00', timezone: 'America/Bogota' } as Vacancy;
-    expect(canFinalize(v, new Date('2026-11-28T19:59:00Z'))).toBe(false);
-    expect(canFinalize(v, new Date('2026-11-28T20:00:00Z'))).toBe(true);
-    expect(canFinalize({ ...v, status: 'OPEN' }, new Date('2026-12-01T00:00:00Z'))).toBe(false);
+  it('inicio y fin según los instantes del backend', () => {
+    const v = { startsAt: '2026-11-28T12:00:00Z', endsAt: '2026-11-28T20:00:00Z' };
+    expect(hasStarted(v, new Date('2026-11-28T11:59:00Z'))).toBe(false);
+    expect(hasStarted(v, new Date('2026-11-28T12:00:00Z'))).toBe(true);
+    expect(hasEnded(v, new Date('2026-11-28T19:59:00Z'))).toBe(false);
+    expect(hasEnded(v, new Date('2026-11-28T20:00:00Z'))).toBe(true);
   });
 
-  it('distancia y viabilidad', () => {
+  it('distancia y compatibilidad', () => {
     expect(haversineKm({ lat: 4.6584, lng: -74.0937 }, { lat: 4.6674, lng: -74.0937 })).toBeCloseTo(1.0, 1);
-    expect(viability(applicant, 0, 'bodega')).toBe(100);
-    expect(viability(applicant, 0, 'otra')).toBe(80);
-    expect(viability({ ...applicant, completedJobs: 0, ratingCount: 0 }, 10, 'bodega')).toBeLessThan(60);
+    expect(matchFor(0, 10, true)).toBe(100);
+    expect(matchFor(10, 10, false)).toBe(12);
   });
 });

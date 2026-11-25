@@ -1,3 +1,4 @@
+import { friendlyError } from '../api/errors';
 import type { InputHTMLAttributes, ReactNode, SelectHTMLAttributes } from 'react';
 import { useId } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -8,19 +9,9 @@ import type { RequestStatus } from '../api/types';
 export function ErrorBox({ error }: { error: ApiError | null | undefined }) {
   const { t } = useTranslation();
   if (!error) return null;
-  const p = error.problem;
-  let text = p.detail;
-  if (!text) {
-    if (p.status === 0) text = t('errors.network');
-    else if (p.status === 503 || p.status === 502) text = t('errors.regionDown');
-    else if (p.status === 403) text = t('errors.forbidden');
-    else if (p.status === 404) text = t('errors.notFound');
-    else text = t('errors.generic');
-  }
   return (
     <div className="alert alert-error" role="alert">
-      <span>{text}</span>
-      {p.code && <code className="muted small"> {p.code}</code>}
+      <span>{friendlyError(error, t)}</span>
     </div>
   );
 }

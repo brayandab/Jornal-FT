@@ -79,6 +79,15 @@ function PrivateShell({ role }: { role: Role }) {
   return (
     <div className="tw">
       <div className={role === 'ADMIN' ? 'tw-column wide' : 'tw-column'}>
+        {role === 'ADMIN' && (
+          // Administrador: su perfil (idioma y cerrar sesión) va arriba a la derecha; el menú inferior no tiene espacio.
+          <div className="tw-admin-top">
+            <NavLink to="/profile" className="tw-admin-profile" aria-label={t('shell.nav.profile')} data-testid="admin-profile">
+              <User size={20} strokeWidth={1.75} aria-hidden="true" />
+              <span>{t('shell.nav.profile')}</span>
+            </NavLink>
+          </div>
+        )}
         <main className={bare ? 'tw-main no-nav' : 'tw-main'}>
           <Outlet />
         </main>

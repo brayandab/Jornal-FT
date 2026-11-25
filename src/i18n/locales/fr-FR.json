@@ -35,7 +35,7 @@
     "password": "Mot de passe",
     "login": "Se connecter",
     "register": "S'inscrire",
-    "noAccount": "Pas encore de compte ?",
+    "noAccount": "Vous n'avez pas encore de compte ?",
     "haveAccount": "Vous avez déjà un compte ?",
     "accountType": "Type de compte",
     "personal": "Informations personnelles",
@@ -92,7 +92,15 @@
     "town": "Quartier (chō)",
     "block": "Bloc (chōme-banchi)",
     "building": "Bâtiment",
-    "line": "Ligne d'adresse"
+    "line": "Ligne d'adresse",
+    "choose": "Choisissez une option",
+    "other": "Autre (le saisir)",
+    "writeOther": "Saisissez : {{field}}",
+    "pickDivisionFirst": "Choisissez d’abord {{division}}",
+    "streetType": "Type de voie",
+    "streetNumber": "Numéro",
+    "crossNumber": "N° croisement",
+    "plate": "Plaque"
   },
   "business": {
     "title": "Profil d'entreprise",
@@ -136,7 +144,7 @@
     "hello": "Bonjour {{name}}, de quoi avez-vous besoin ?",
     "subtitle": "Choisissez un service. Les prix sont dans la devise de votre pays.",
     "search": "Rechercher un service",
-    "noPrice": "Pas encore de prix dans ce pays"
+    "noPrice": "Aucun prix disponible dans ce pays"
   },
   "units": {
     "DAY_one": "journée",
@@ -211,7 +219,7 @@
     "jobsTitle": "Mes missions",
     "filter": "Statut",
     "all": "Toutes",
-    "none": "Rien pour le moment",
+    "none": "Aucun élément pour le moment",
     "completedJobs": "Missions terminées",
     "earnings": "Gains estimés"
   },
@@ -242,12 +250,12 @@
   },
   "worker": {
     "hello": "Bonjour {{name}}",
-    "notVerified": "Votre compte est en attente de vérification. Vous recevrez des offres lorsqu'un administrateur l'aura approuvé.",
+    "notVerified": "Votre compte est en attente de vérification. Vous pouvez voir les offres et postuler ; pour être disponible, un administrateur doit l’approuver.",
     "available": "Disponible",
     "unavailable": "Indisponible",
     "availableHint": "Seuls les prestataires disponibles reçoivent des offres.",
     "offers": "Offres",
-    "noOffers": "Aucune offre pour le moment. Laissez cet écran ouvert.",
+    "noOffers": "Aucune offre pour le moment. Veuillez laisser cet écran ouvert.",
     "expiresIn": "Encore {{seconds}} s",
     "offerExpired": "Expirée",
     "accept": "Accepter",
@@ -314,7 +322,7 @@
     "ready": "Prêts",
     "unacked": "Non confirmés",
     "consumers": "Consommateurs",
-    "queuesUnavailable": "L'API de gestion de RabbitMQ n'est pas accessible",
+    "queuesUnavailable": "Les informations sur les files de messages ne sont pas disponibles",
     "deadLetters_one": "{{count}} message dans la file des messages morts",
     "deadLetters_other": "{{count}} messages dans la file des messages morts",
     "generatedAt": "Mis à jour {{at}}",
@@ -406,10 +414,14 @@
   },
   "errors": {
     "generic": "Une erreur s'est produite. Veuillez réessayer.",
-    "network": "Pas de connexion au serveur.",
+    "network": "Connexion impossible. Veuillez vérifier votre accès à Internet.",
     "regionDown": "Le service de ce pays n'est pas disponible pour le moment. Les autres pays continuent de fonctionner.",
-    "forbidden": "Vous n'avez pas l'autorisation pour cette action.",
-    "notFound": "Introuvable."
+    "forbidden": "Vous n'êtes pas autorisé à effectuer cette action.",
+    "notFound": "L'élément demandé est introuvable.",
+    "session": "Votre session a expiré. Veuillez vous reconnecter.",
+    "conflict": "Ces informations ont été modifiées récemment. Veuillez actualiser la page et réessayer.",
+    "invalidData": "Certaines informations ne sont pas valides. Veuillez les vérifier et réessayer.",
+    "tooMany": "Trop de tentatives. Veuillez patienter quelques minutes et réessayer."
   },
   "tw": {
     "nav": {
@@ -429,7 +441,7 @@
     "unavailable": "Indisponible",
     "receiving": "Offres reçues dans un rayon de {{km}} km · {{zone}}",
     "turnOn": "Activez-la pour recevoir des offres",
-    "loadError": "Impossible de charger votre profil.",
+    "loadError": "Impossible de charger votre profil. Veuillez réessayer.",
     "retry": "Réessayer",
     "thisWeek": "Cette semaine",
     "completed": "Terminées",
@@ -440,9 +452,9 @@
     "filters": "Filtres",
     "maxDistance": "Jusqu'à {{km}} km",
     "onlyUrgent": "Urgentes uniquement",
-    "offersError": "Impossible de charger les offres.",
+    "offersError": "Impossible de charger les offres. Veuillez réessayer.",
     "noOffers": "Aucune offre à proximité pour le moment",
-    "weWillNotify": "Nous vous préviendrons dès qu'une nouvelle arrive",
+    "weWillNotify": "Vous serez averti dès qu'une nouvelle offre sera disponible",
     "activateToReceive": "Activez votre disponibilité pour recevoir des offres",
     "urgent": "Urgent",
     "compatibility": "Compatibilité {{value}} %",
@@ -454,11 +466,11 @@
     "accepted": "Offre acceptée",
     "rejected": "Offre refusée",
     "viewJob": "Voir la mission",
-    "offerGone": "Cette offre n'est plus disponible : elle a expiré ou quelqu'un d'autre l'a prise.",
+    "offerGone": "Cette offre n'est plus disponible : elle a expiré ou a été attribuée à une autre personne.",
     "linkCopied": "Lien copié",
     "share": "Partager",
     "verifiedCompany": "Entreprise vérifiée",
-    "paysOnTime": "Paie à temps",
+    "paysOnTime": "Paiements ponctuels",
     "date": "Date",
     "schedule": "Horaires",
     "distance": "Distance",
@@ -516,27 +528,25 @@
     "people": "Personnes",
     "peopleNeeded_one": "{{count}} personne",
     "peopleNeeded_other": "{{count}} personnes",
-    "payNote": "Vous êtes payé une fois le travail convenu terminé, par le moyen choisi par l'employeur.",
+    "payNote": "Vous êtes rémunéré à la fin, lorsque l’employeur valide votre travail.",
     "banner": {
       "applied": "Candidature envoyée. L'employeur examinera les candidats et vous préviendra s'il vous choisit.",
-      "selected": "Vous avez été retenu ! Présentez-vous le {{date}} à {{time}} au {{address}}.",
-      "notSelected": "Cette fois, l'employeur a choisi d'autres personnes.",
-      "cancelled": "L'employeur a annulé le processus : {{reason}}",
-      "paid": "Vous avez reçu {{amount}} par {{method}}.",
-      "closed": "Cette mission n'accepte plus de candidatures."
-    },
-    "application": {
-      "APPLIED": "Candidat",
-      "SELECTED": "Retenu",
-      "NOT_SELECTED": "Non retenu",
-      "WITHDRAWN": "Retirée"
+      "selected": "Vous avez été retenu. Rendez-vous à {{address}} le {{date}} à {{time}}. Veuillez confirmer votre présence.",
+      "notSelected": "L'employeur a retenu d'autres candidats pour cette mission.",
+      "cancelled": "L’employeur a retiré cette offre.",
+      "paid": "Vous avez reçu {{amount}} pour ce travail.",
+      "closed": "Cette mission n'accepte plus de candidatures.",
+      "confirmed": "Vous avez confirmé votre présence : rendez-vous à {{address}} le {{date}} à {{time}}.",
+      "declined": "Vous avez indiqué ne pas pouvoir venir.",
+      "workCancelled": "L’employeur a annulé votre participation ; aucun paiement ne sera effectué. Motif : {{reason}}",
+      "completed": "L’employeur a validé votre travail. Votre paiement est en cours de traitement."
     },
     "status": {
       "OPEN": "Ouverte",
-      "IN_PROCESS": "En cours",
-      "COMPLETED": "Terminée",
       "CANCELLED": "Annulée",
-      "PAID": "Payé"
+      "FILLED": "Places pourvues",
+      "CLOSED": "Clôturée",
+      "TO_CLOSE": "À clôturer"
     },
     "employerKind": {
       "PERSON": "Particulier",
@@ -552,7 +562,8 @@
     "stats": {
       "open": "Ouvertes",
       "inProcess": "En cours",
-      "done": "Terminées"
+      "done": "Terminées",
+      "toClose": "À clôturer"
     },
     "publish": "Publier une mission",
     "publishTitle": "Nouvelle mission",
@@ -561,7 +572,7 @@
     "openVacancies": "Missions ouvertes",
     "receivingApplications": "Candidatures ouvertes",
     "noOpen": "Vous n'avez aucune mission ouverte",
-    "noOpenHint": "Publiez une mission et nous vous préviendrons dès qu'une personne postule.",
+    "noOpenHint": "Publiez une mission ; vous serez averti dès qu'une personne postulera.",
     "applicantsOf_one": "{{count}} candidat · {{needed}} recherché(s)",
     "applicantsOf_other": "{{count}} candidats · {{needed}} recherché(s)",
     "selectedCount_one": "{{count}} personne retenue",
@@ -571,7 +582,7 @@
     "whatWork": "Quelle est la mission ?",
     "whenWork": "Quand et combien de personnes ?",
     "title": "Titre de la mission",
-    "descriptionHint": "Ce qu’ils feront, à quoi ressemble le lieu et ce qu’il faut apporter.",
+    "descriptionHint": "Décrivez les tâches, le lieu et l’équipement à prévoir.",
     "requirementHint": "Ex. : chaussures de sécurité",
     "peopleNeededLabel": "Nombre de personnes",
     "startDate": "Premier jour",
@@ -586,9 +597,13 @@
     "sum": {
       "workers": "{{workers}} × {{days}} jour(s) × {{pay}}",
       "commission": "Commission {{brand}}",
-      "total": "Total à payer"
+      "total": "Total à payer",
+      "forPeople_one": "Total pour {{count}} personne",
+      "forPeople_other": "Total pour {{count}} personnes",
+      "perPerson_one": "Par personne ({{count}} jour × {{pay}})",
+      "perPerson_other": "Par personne ({{count}} jours × {{pay}})"
     },
-    "payAtEnd": "Rien n’est débité maintenant : vous payez à la fin du processus, en choisissant le moyen pour chaque personne.",
+    "payAtEnd": "Rien n’est facturé à la publication. Vous payez chaque personne en la finalisant : automatiquement ou manuellement, selon vos réglages.",
     "validation": {
       "workers": "Entre 1 et 20 personnes",
       "days": "Entre 1 et 7 jours",
@@ -601,31 +616,31 @@
     "selectUpTo_one": "Choisissez {{count}} personne.",
     "selectUpTo_other": "Choisissez jusqu'à {{count}} personnes.",
     "noApplicants": "Aucun candidat pour le moment",
-    "noApplicantsHint": "Nous avons prévenu les prestataires proches ; revenez un peu plus tard.",
+    "noApplicantsHint": "Les prestataires à proximité ont été informés. Veuillez revenir ultérieurement.",
     "demo": "Démo",
     "jobsDone_one": "{{count}} mission",
     "jobsDone_other": "{{count}} missions",
-    "sameCategory": "Fait ce type de travail",
+    "sameCategory": "Expérience dans ce domaine",
     "viability": "Adéquation {{value}} %",
     "selectCount_one": "Retenir ({{count}})",
     "selectCount_other": "Retenir ({{count}})",
-    "selectedToast_one": "Nous avons prévenu la personne retenue",
-    "selectedToast_other": "Nous avons prévenu les {{count}} personnes retenues",
+    "selectedToast_one": "La personne retenue a été informée",
+    "selectedToast_other": "Les {{count}} personnes retenues ont été informées",
     "selectedPeople": "Personnes retenues",
     "cancel": "Annuler la mission",
     "cancelVacancy": "Annuler la mission",
     "cancelProcess": "Annuler le processus",
     "finalizeProcess": "Terminer le processus",
     "cancelReasons": {
-      "noShow": "Les personnes ne sont pas venues",
-      "notFinished": "Elles n'ont pas terminé le travail",
+      "noShow": "Absence des personnes retenues",
+      "notFinished": "Travail assigné non terminé",
       "other": "Autre motif"
     },
-    "cancelHint": "Les personnes seront prévenues. Rien n’est débité.",
+    "cancelHint": "Les personnes concernées seront informées. Aucun montant ne sera débité.",
     "cancelledToast": "Processus annulé",
     "cancelledBecause": "Annulée : {{reason}}",
-    "readyToFinalize": "La journée est terminée : vous pouvez terminer et payer.",
-    "finalizeFrom": "Vous pourrez terminer et payer à partir du {{date}} à {{time}}, à la fin de la dernière journée.",
+    "readyToFinalize": "La journée est terminée : vous pouvez clôturer et procéder au paiement.",
+    "finalizeFrom": "Vous pourrez clôturer et payer à partir du {{date}} à {{time}}, à la fin de la dernière journée.",
     "demoEnd": "Démo : simuler la fin de la journée ({{at}})",
     "costSummary": "Coût",
     "paidSummary": "Payé",
@@ -633,25 +648,20 @@
     "finalizeHint": "Choisissez comment payer chaque personne pour « {{title}} ».",
     "payEachWorker": "Paiement de chaque prestataire",
     "methodFor": "Moyen de paiement pour {{name}}",
-    "simulatedPayment": "Paiement simulé : pas encore relié au sous-système de paiements.",
+    "simulatedPayment": "Paiement simulé : ce moyen de paiement n'est pas encore disponible.",
     "payAmount": "Payer {{amount}}",
     "finalizedToast": "Processus terminé et payé",
     "registry": "Suivi",
-    "emptyRegistry": {
-      "IN_PROCESS": "Aucun processus en cours",
-      "COMPLETED": "Aucun processus terminé pour le moment",
-      "CANCELLED": "Aucun processus annulé"
-    },
     "errors": {
       "VACANCY_NOT_FOUND": "Mission introuvable.",
       "VACANCY_NOT_OPEN": "Cette mission n'accepte plus de candidatures.",
       "ALREADY_APPLIED": "Vous avez déjà postulé à cette mission.",
       "CANNOT_WITHDRAW": "Vous ne pouvez plus retirer cette candidature.",
       "VACANCY_NOT_FINISHED": "La dernière journée n'est pas encore terminée.",
-      "INVALID_SELECTION": "Vérifiez le nombre de personnes choisies.",
+      "INVALID_SELECTION": "Veuillez vérifier le nombre de personnes sélectionnées.",
       "VACANCY_CLOSED": "Cette mission est déjà clôturée.",
       "VACANCY_NOT_IN_PROCESS": "La mission n'est pas en cours.",
-      "ERROR": "Une erreur s'est produite."
+      "ERROR": "Une erreur s'est produite. Veuillez réessayer."
     },
     "notice": {
       "SELECTED": {
@@ -660,7 +670,7 @@
       },
       "NOT_SELECTED": {
         "title": "Non retenu : {{title}}",
-        "body": "Cette fois, d'autres personnes ont été choisies. Continuez à postuler."
+        "body": "D'autres candidats ont été retenus cette fois-ci. Nous vous invitons à poursuivre vos candidatures."
       },
       "CANCELLED": {
         "title": "Processus annulé : {{title}}",
@@ -676,14 +686,14 @@
       },
       "NEARBY": {
         "title": "Mission près de chez vous : {{title}}",
-        "body": "Consultez-la et postulez."
+        "body": "Consultez l'offre et postulez si elle vous intéresse."
       }
     },
     "profile": {
       "title": "Mon CV",
-      "hint": "C'est ce que voient les employeurs quand ils examinent les candidats.",
+      "hint": "Ces informations sont visibles par les employeurs lorsqu'ils examinent les candidatures.",
       "photo": "Changer la photo",
-      "photoError": "Impossible de lire l'image.",
+      "photoError": "Impossible de lire l'image. Veuillez en choisir une autre.",
       "experience": "Expérience",
       "experienceHint": "Ex. : 2 ans comme aide-magasinier.",
       "skills": "Compétences",
@@ -692,6 +702,130 @@
       "addDocument": "Ajouter un document",
       "documentsHint": "PDF ou image, jusqu'à 5 Mo (certificats, formations, références).",
       "docTooBig": "Un fichier dépasse 5 Mo et n'a pas été ajouté."
-    }
+    },
+    "whatToDo": "Ce qu’il faut faire",
+    "items": "Équipement à apporter",
+    "noItems": "Aucun équipement requis.",
+    "toCloseHint": "Travail terminé : finalisez ou annulez chaque personne",
+    "hiredOf": "{{count}} sur {{needed}} embauchés",
+    "payPerPerson": "Paiement par personne",
+    "readyToClose": "Le travail est terminé. Pour chaque personne : Finaliser (passage au paiement) ou Annuler en cas d’absence ou de travail non terminé.",
+    "closeFrom": "Vous pourrez finaliser ou annuler chaque personne à partir du {{at}}.",
+    "vacancyCancelled": "Vous avez retiré cette offre.",
+    "hiredPeople": "Personnes embauchées",
+    "verified": "Identité vérifiée",
+    "paymentNote": "Note du paiement : {{note}}",
+    "cancelWork": "Annuler",
+    "completeWork": "Finaliser",
+    "completedToast": "{{name}} a été finalisé et passe au paiement",
+    "justification": "Justification",
+    "cancelWorkHint": "En cas d’annulation, cette personne ne sera pas rémunérée. Veuillez en indiquer le motif.",
+    "cancelledWorkToast": "Annulé sans paiement",
+    "registerPayment": "Enregistrer le paiement",
+    "paidToast": "Paiement à {{name}} enregistré",
+    "amountPaid": "Montant payé ({{currency}})",
+    "agreedAmount": "Convenu dans l’offre : {{amount}}",
+    "payLessJustification": "Le montant est inférieur à celui convenu : veuillez le justifier",
+    "confirmPayment": "Confirmer le paiement",
+    "settings": {
+      "title": "Paiements aux travailleurs",
+      "autoPayout": "Paiement automatique",
+      "autoOn": "Activé : lorsque vous sélectionnez Finaliser, la personne est payée automatiquement.",
+      "autoOff": "Désactivé : vous enregistrez chaque paiement (tout montant inférieur à celui convenu doit être justifié)."
+    },
+    "tab": {
+      "TO_CLOSE": "À clôturer",
+      "PAYMENTS": "Paiements",
+      "OPEN": "Ouvertes",
+      "CLOSED": "Clôturées",
+      "CANCELLED": "Annulées"
+    },
+    "emptyRegistry": {
+      "TO_CLOSE": "Aucune offre terminée à clôturer.",
+      "PAYMENTS": "Aucune personne finalisée pour l’instant.",
+      "OPEN": "Vous n’avez aucune offre ouverte.",
+      "CLOSED": "Aucune offre clôturée pour l’instant.",
+      "CANCELLED": "Vous n’avez aucune offre annulée."
+    },
+    "attendance": {
+      "question": "Pouvez-vous venir ?",
+      "hint": "Veuillez confirmer afin que l’employeur puisse compter sur vous. À défaut, la place sera proposée à une autre personne.",
+      "yes": "Oui, je serai présent",
+      "no": "Je ne pourrai pas venir",
+      "confirmedToast": "Vous avez confirmé votre présence",
+      "declinedToast": "Vous avez indiqué ne pas pouvoir venir"
+    },
+    "application": {
+      "APPLIED": "Candidature envoyée",
+      "SELECTED": "À confirmer",
+      "CONFIRMED": "Confirmé",
+      "DECLINED": "Indisponible",
+      "WITHDRAWN": "Retirée",
+      "NOT_SELECTED": "Non retenu",
+      "COMPLETED": "Finalisé",
+      "CANCELLED": "Annulé"
+    },
+    "hiredStatus": {
+      "SELECTED": "En attente de confirmation de présence",
+      "CONFIRMED": "A confirmé sa présence",
+      "DECLINED": "A indiqué être indisponible",
+      "WITHDRAWN": "S’est retiré",
+      "COMPLETED": "Finalisé",
+      "CANCELLED": "Annulé"
+    },
+    "payout": {
+      "PENDING": "Paiement en attente : {{amount}}",
+      "PROCESSING": "Paiement automatique en cours : {{amount}}",
+      "PAID": "Payé : {{amount}}",
+      "FAILED": "Le paiement automatique de {{amount}} n'a pas abouti : veuillez payer manuellement"
+    },
+    "payoutMode": {
+      "AUTO": "Automatique",
+      "MANUAL": "Manuel"
+    },
+    "payoutFilter": {
+      "ALL": "Tous",
+      "PENDING": "En attente",
+      "PROCESSING": "En cours",
+      "FAILED": "Échoués",
+      "PAID": "Payés"
+    },
+    "closeReason": {
+      "NO_SHOW": "Absence",
+      "ABANDONED": "Travail assigné non terminé",
+      "OTHER": "Autre motif"
+    },
+    "setLocation": "Enregistrez votre position dans votre profil pour recevoir les offres proches.",
+    "goToProfile": "Aller au profil",
+    "employerNote": "Note de l’employeur : {{note}}",
+    "completeProfile": {
+      "title": "Complétez votre profil de travailleur",
+      "hint": "Choisissez vos services, votre rayon de travail et votre position sur la carte pour recevoir les offres proches.",
+      "action": "Compléter le profil"
+    },
+    "itemsPick": "Choisir dans la liste",
+    "itemsWrite": "Saisir un autre équipement",
+    "itemSuggestions": "Pièce d’identité|Carte vitale|Téléphone avec données|Tenue confortable|Bouteille d’eau",
+    "useBusinessAddress": "Utiliser l’adresse de mon entreprise",
+    "useProfileAddress": "Utiliser l’adresse de mon profil",
+    "noProfileAddress": "Enregistrez une adresse dans votre profil pour pouvoir l’utiliser ici directement.",
+    "markOnMap": "vérifiez l'emplacement sur la carte",
+    "itemsByCategory": {
+      "cleaning": "Gants en caoutchouc|Masque|Tenue confortable|Chaussures antidérapantes|Tablier",
+      "warehouse": "Chaussures de sécurité|Gants|Gilet réfléchissant|Ceinture lombaire|Casque",
+      "construction": "Chaussures coquées|Casque|Gants|Lunettes de protection|Gilet réfléchissant|Outils personnels",
+      "events": "Chemise blanche|Pantalon noir|Chaussures noires|Tenue soignée",
+      "gardening": "Gants|Bottes|Casquette ou chapeau|Crème solaire|Outils de jardin",
+      "delivery": "Moto ou vélo|Permis de conduire|Casque|Imperméable|Sac de livraison",
+      "moving": "Ceinture lombaire|Gants|Chaussures de sécurité|Tenue confortable",
+      "painting": "Combinaison|Lunettes de protection|Masque|Casquette|Pinceaux et rouleaux"
+    },
+    "autoTranslated": "Traduit automatiquement depuis : {{language}}."
+  },
+  "clock": {
+    "choose": "Choisir l’heure",
+    "pickHour": "Touchez l’heure (cercle intérieur : 13 à 00)",
+    "pickMinute": "Touchez les minutes",
+    "done": "OK"
   }
 }

@@ -1,70 +1,77 @@
 // Vacantes de trabajo temporal (informal, sin contrato: de 1 a 7 días).
-// Hoy los sirve una capa simulada en el navegador (src/vacancies/mockStore.ts); estos tipos son el contrato
-// que debe implementar el backend (ver docs/pendientes-backend.md).
+// Los sirve el backend (módulo vacancies del core regional, /api/{país}/vacancies). La capa vacancies/api.ts
+// traduce sus respuestas a esta forma: fechas y horario locales del lugar, pago por jornada y por persona.
 
 export interface LatLng { lat: number; lng: number }
 
-export type VacancyStatus =
-  | 'OPEN'        // publicada, recibiendo postulaciones
-  | 'IN_PROCESS'  // la empresa ya seleccionó; los trabajadores van o están trabajando
-  | 'COMPLETED'   // finalizada y pagada
-  | 'CANCELLED';  // cancelada (no asistieron, no terminaron u otro motivo)
+/** OPEN: recibe postulaciones. FILLED: cupos completos. CLOSED: todos cerrados tras el trabajo. CANCELLED: retirada. */
+export type VacancyStatus = 'OPEN' | 'FILLED' | 'CLOSED' | 'CANCELLED';
 
-export type ApplicationStatus = 'APPLIED' | 'SELECTED' | 'NOT_SELECTED' | 'WITHDRAWN';
+/**
+ * APPLIED → SELECTED (contratado, debe confirmar asistencia) → CONFIRMED → COMPLETED (pasa a pago) o CANCELLED
+ * (no fue o dejó el trabajo; sin pago). DECLINED: dijo que no puede. WITHDRAWN: se retiró. NOT_SELECTED: no elegido.
+ */
+export type ApplicationStatus =
+  | 'APPLIED' | 'SELECTED' | 'CONFIRMED' | 'DECLINED' | 'WITHDRAWN' | 'NOT_SELECTED' | 'COMPLETED' | 'CANCELLED';
+
+export type CloseReason = 'NO_SHOW' | 'ABANDONED' | 'OTHER';
+export type PayoutStatus = 'PENDING' | 'PROCESSING' | 'PAID' | 'FAILED';
+export type PayoutMode = 'AUTO' | 'MANUAL';
 
 export interface Applicant {
   workerId: string;
   name: string;
+  verified: boolean;
   ratingAvg: number;
   ratingCount: number;
   completedJobs: number;
-  bio: string;
-  experience: string;
-  skills: string[];
-  categoryIds: string[];
-  phone?: string;
-  /** Postulante ficticio para demostrar la selección sin otra sesión abierta. */
-  simulated: boolean;
 }
 
 export interface Application {
   id: string;
   vacancyId: string;
+  vacancyTitle: string;
   worker: Applicant;
   status: ApplicationStatus;
+  message?: string;
   appliedAt: string;
-  distanceKm: number;
-  /** 0 a 100: cercanía, calificación, experiencia y categoría. */
+  distanceKm: number | null;
+  /** 0 a 100, lo calcula el backend: calificación, trabajos finalizados, cercanía y verificación. */
   viability: number;
+  closeReason?: CloseReason;
+  justification?: string;
+  /** Lo acordado (pago de la vacante por persona) y lo que realmente se pagó. */
+  payoutMinor?: number;
+  paidAmountMinor?: number;
+  payoutStatus?: PayoutStatus;
+  payoutMode?: PayoutMode;
+  paymentNote?: string;
+  payoutRef?: string;
+  payoutFailure?: string;
+  paidAt?: string;
+  currency: string;
+  moneyScale: number;
+  startsAt: string;
+  endsAt: string;
 }
 
 export interface Employer {
   id: string;
   name: string;
-  legalName?: string;
-  kind: 'PERSON' | 'BUSINESS';
-  ratingAvg: number;
-  ratingCount: number;
-  verified: boolean;
-}
-
-export interface Payout {
-  workerId: string;
-  name: string;
-  method: string;
-  amountMinor: number;
 }
 
 export interface Vacancy {
   id: string;
-  region: string;
   employer: Employer;
-  categoryId: string;
+  categoryId: string | null;
   categoryName: string;
   title: string;
   description: string;
+  /** Implementos que debe llevar el trabajador. */
   requirements: string[];
   workersNeeded: number;
+  /** Personas contratadas que ocupan cupo (por confirmar, confirmadas o finalizadas). */
+  filled: number;
   /** Primer día (fecha local del lugar) y número de días (1 a 7). */
   startDate: string;
   days: number;
@@ -72,30 +79,30 @@ export interface Vacancy {
   startTime: string;
   endTime: string;
   timezone: string;
-  address: Record<string, string>;
+  startsAt: string;
+  endsAt: string;
   addressText: string;
   latitude: number;
   longitude: number;
   payPerDayMinor: number;
+  /** Pago total por persona (lo que se le paga al finalizar). */
+  payMinor: number;
   currency: string;
   moneyScale: number;
-  /** Comisión de la app sobre lo que se paga a los trabajadores (puntos básicos), la paga la empresa. */
-  commissionBps: number;
-  urgent: boolean;
   status: VacancyStatus;
   createdAt: string;
-  selectedAt?: string;
-  finishedAt?: string;
-  cancelReason?: string;
-  applications: Application[];
-  payouts?: Payout[];
-  /** Solo demostración: permite finalizar antes de que termine la última jornada. */
-  demoEnded?: boolean;
+  /** Solo para el trabajador que consulta. */
+  distanceKm: number | null;
+  myApplication: ApplicationStatus | null;
+  /** Solo para el dueño: número de postulaciones. */
+  applicantsCount: number | null;
+  /** Idioma en que se escribió (es, en...) y si el contenido se tradujo automáticamente al idioma actual. */
+  sourceLanguage: string | null;
+  translated: boolean;
 }
 
 export interface VacancyDraft {
   categoryId: string;
-  categoryName: string;
   title: string;
   description: string;
   requirements: string[];
@@ -106,30 +113,14 @@ export interface VacancyDraft {
   endTime: string;
   timezone: string;
   address: Record<string, string>;
-  addressText: string;
   latitude: number;
   longitude: number;
   payPerDayMinor: number;
-  urgent: boolean;
 }
 
-export type NoticeKind = 'SELECTED' | 'NOT_SELECTED' | 'CANCELLED' | 'PAID' | 'NEW_APPLICANT' | 'NEARBY';
-
-export interface VacancyNotice {
-  id: string;
-  userId: string;
-  vacancyId: string;
-  kind: NoticeKind;
-  createdAt: string;
-  read: boolean;
-  /** Datos para armar el texto en el idioma de quien lo lee. */
-  data: Record<string, string | number>;
-}
-
-/** Vacante vista por un trabajador: distancia a su ubicación base y su postulación, si existe. */
+/** Vacante vista por un trabajador: distancia a su ubicación base y compatibilidad. */
 export interface NearbyVacancy {
   vacancy: Vacancy;
   distanceKm: number;
   match: number;
-  mine?: Application;
 }

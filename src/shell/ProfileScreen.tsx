@@ -7,6 +7,7 @@ import { LOCALE_NAMES, UI_LOCALES } from '../i18n';
 import { disconnectRealtime } from '../lib/realtime';
 import { ProfilePage } from '../pages/ProfilePage';
 import { useApp } from '../state/AppContext';
+import { PaymentSettingsCard } from '../employer/PaymentSettingsCard';
 import { WorkerExtraCard } from '../worker/WorkerExtraCard';
 import { WorkerProfileCard } from '../worker/WorkerProfileCard';
 
@@ -30,6 +31,7 @@ export function ProfileScreen() {
           <WorkerProfileCard />
         </>
       )}
+      {(role === 'APPLICANT' || role === 'BUSINESS') && <PaymentSettingsCard />}
       <ProfilePage />
       <section className="card">
         <Select label={t('start.language')} value={locale} onChange={(e) => setLocale(e.target.value)}>

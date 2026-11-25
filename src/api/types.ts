@@ -344,6 +344,9 @@ export interface InboxItem {
   locale?: string;
   createdAt: string;
   readAt?: string | null;
+  /** Avisos de vacantes: la vacante y la acción del botón (CONFIRM_ATTENDANCE o VIEW_VACANCY). */
+  vacancyId?: string | null;
+  action?: string | null;
 }
 
 export interface ReceiptLine {

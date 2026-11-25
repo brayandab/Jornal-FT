@@ -5,8 +5,8 @@ import { Notice } from '../components/ui';
 import { Button, Chip } from '../design/components';
 import { initials } from '../design/format';
 import { useApp } from '../state/AppContext';
-import { vacancyApi } from '../vacancies/mockStore';
-import type { WorkerExtra } from '../vacancies/mockStore';
+import { saveExtra } from '../vacancies/workerExtra';
+import type { WorkerExtra } from '../vacancies/workerExtra';
 import { useWorker } from './WorkerContext';
 
 const MAX_DOC_BYTES = 5 * 1024 * 1024;
@@ -38,7 +38,7 @@ function shrink(file: File): Promise<string> {
 export function WorkerExtraCard() {
   const { t } = useTranslation();
   const { user } = useApp();
-  const { extra } = useWorker();
+  const { extra, setExtra } = useWorker();
   const [form, setForm] = useState<WorkerExtra>({ experience: '', skills: [], documents: [] });
   const [skill, setSkill] = useState('');
   const [busy, setBusy] = useState(false);
@@ -79,7 +79,7 @@ export function WorkerExtraCard() {
     setBusy(true);
     setSaved(false);
     try {
-      await vacancyApi.saveExtra(user.id, form);
+      setExtra(saveExtra(user.id, form));
       setSaved(true);
       setError(null);
     } finally {

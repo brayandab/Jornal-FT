@@ -35,7 +35,7 @@
     "password": "Password",
     "login": "Log in",
     "register": "Sign up",
-    "noAccount": "Don't have an account?",
+    "noAccount": "No account yet?",
     "haveAccount": "Already have an account?",
     "accountType": "Account type",
     "personal": "Personal details",
@@ -92,7 +92,15 @@
     "town": "Town",
     "block": "Block (chōme-banchi)",
     "building": "Building",
-    "line": "Address line"
+    "line": "Address line",
+    "choose": "Choose an option",
+    "other": "Other (type it)",
+    "writeOther": "Type: {{field}}",
+    "pickDivisionFirst": "First choose {{division}}",
+    "streetType": "Street type",
+    "streetNumber": "Number",
+    "crossNumber": "Cross no.",
+    "plate": "Plate"
   },
   "business": {
     "title": "Business profile",
@@ -133,10 +141,10 @@
     "changePassword": "Change password"
   },
   "catalog": {
-    "hello": "Hi {{name}}, what do you need?",
+    "hello": "Hello {{name}}, how can we help you?",
     "subtitle": "Choose a service. Prices are in your country's currency.",
     "search": "Search services",
-    "noPrice": "No price in this country yet"
+    "noPrice": "Not yet available in this country"
   },
   "units": {
     "DAY_one": "day",
@@ -235,19 +243,19 @@
     "hint": {
       "PENDING_PAYMENT": "Authorizing the payment…",
       "SEARCHING_WORKER": "Sending the offer to nearby workers…",
-      "ASSIGNED": "The worker accepted. You'll see their position when they start the trip.",
+      "ASSIGNED": "The worker has accepted. Their location will be shown once they are on the way.",
       "EN_ROUTE": "Waiting for the worker's position…",
       "IN_PROGRESS": "The job is in progress."
     }
   },
   "worker": {
-    "hello": "Hi {{name}}",
-    "notVerified": "Your account is pending verification. You will receive offers once an administrator approves it.",
+    "hello": "Hello {{name}}",
+    "notVerified": "Your account is pending verification. You may browse and apply for vacancies; an administrator must approve your account before you can mark yourself as available.",
     "available": "Available",
     "unavailable": "Not available",
     "availableHint": "Only available workers receive offers.",
     "offers": "Offers",
-    "noOffers": "No offers right now. Keep this screen open.",
+    "noOffers": "There are no offers at the moment. Please keep this screen open.",
     "expiresIn": "{{seconds}} s left",
     "offerExpired": "Expired",
     "accept": "Accept",
@@ -261,7 +269,7 @@
     "baseHint": "Tap the map to set your base location (used to find nearby jobs).",
     "nextStep": "Next step",
     "step": {
-      "en-route": "I'm on my way",
+      "en-route": "On my way",
       "start": "Start the job",
       "finish": "Finish the job"
     },
@@ -277,8 +285,8 @@
     "score": "Score",
     "comment": "Comment (optional)",
     "send": "Send rating",
-    "rateWorker": "How was the worker?",
-    "rateClient": "How was the client?",
+    "rateWorker": "How would you rate the worker?",
+    "rateClient": "How would you rate the client?",
     "direction": {
       "CLIENT_TO_WORKER": "Client → worker",
       "WORKER_TO_CLIENT": "Worker → client"
@@ -314,7 +322,7 @@
     "ready": "Ready",
     "unacked": "Unacked",
     "consumers": "Consumers",
-    "queuesUnavailable": "RabbitMQ management API is not reachable",
+    "queuesUnavailable": "Queue information is currently unavailable",
     "deadLetters_one": "{{count}} message in the dead-letter queue",
     "deadLetters_other": "{{count}} messages in the dead-letter queue",
     "generatedAt": "Updated {{at}}",
@@ -405,11 +413,15 @@
     "page": "Page {{page}} of {{total}}"
   },
   "errors": {
-    "generic": "Something went wrong. Please try again.",
-    "network": "No connection to the server.",
-    "regionDown": "The service for this country is not available right now. Other countries keep working.",
-    "forbidden": "You don't have permission for this action.",
-    "notFound": "Not found."
+    "generic": "An error occurred. Please try again.",
+    "network": "Unable to connect. Please check your connection.",
+    "regionDown": "The service for this country is temporarily unavailable. Other countries are not affected.",
+    "forbidden": "You do not have permission to perform this action.",
+    "notFound": "The requested item could not be found.",
+    "session": "Your session has ended. Please sign in again.",
+    "conflict": "This information was recently updated. Please refresh and try again.",
+    "invalidData": "Some of the information is not valid. Please review it and try again.",
+    "tooMany": "Too many attempts. Please wait a few minutes and try again."
   },
   "tw": {
     "nav": {
@@ -428,8 +440,8 @@
     "available": "Available",
     "unavailable": "Not available",
     "receiving": "Receiving offers within {{km}} km · {{zone}}",
-    "turnOn": "Turn it on to receive offers",
-    "loadError": "Your profile couldn't be loaded.",
+    "turnOn": "Enable availability to receive offers",
+    "loadError": "Your profile could not be loaded.",
     "retry": "Retry",
     "thisWeek": "This week",
     "completed": "Completed",
@@ -440,9 +452,9 @@
     "filters": "Filters",
     "maxDistance": "Up to {{km}} km",
     "onlyUrgent": "Urgent only",
-    "offersError": "Offers couldn't be loaded.",
-    "noOffers": "No offers nearby right now",
-    "weWillNotify": "We'll let you know when a new one arrives",
+    "offersError": "Offers could not be loaded.",
+    "noOffers": "There are no nearby offers at the moment",
+    "weWillNotify": "You will be notified when a new offer is available",
     "activateToReceive": "Turn on your availability to receive offers",
     "urgent": "Urgent",
     "compatibility": "Match {{value}}%",
@@ -454,7 +466,7 @@
     "accepted": "Offer accepted",
     "rejected": "Offer rejected",
     "viewJob": "View job",
-    "offerGone": "This offer is no longer available: it expired or someone else took it.",
+    "offerGone": "This offer is no longer available. It has expired or been filled.",
     "linkCopied": "Link copied",
     "share": "Share",
     "verifiedCompany": "Verified company",
@@ -471,7 +483,7 @@
     "commission": "{{brand}} fee",
     "paidByClient": "Paid by the client",
     "paidByWorker": "Paid by you",
-    "youGet": "You get",
+    "youGet": "You receive",
     "payNote": "The payment is released to your balance when the job is finished and confirmed.",
     "acceptFor": "Accept · {{amount}}"
   },
@@ -498,7 +510,7 @@
     "alert": "Job near you · {{value}}% match",
     "apply": "Apply",
     "applyFor": "Apply · {{amount}}",
-    "applied": "You applied",
+    "applied": "Application submitted",
     "withdrawn": "You withdrew your application",
     "withdraw": "Withdraw application",
     "view": "View job",
@@ -516,27 +528,25 @@
     "people": "People",
     "peopleNeeded_one": "{{count}} person",
     "peopleNeeded_other": "{{count}} people",
-    "payNote": "You get paid when the agreed work is done, with the method the employer chooses.",
+    "payNote": "Payment is made when the work ends and the employer marks it as completed.",
     "banner": {
-      "applied": "You applied. The employer will review applicants and let you know if you're chosen.",
-      "selected": "You've been selected! Show up on {{date}} at {{time}} at {{address}}.",
-      "notSelected": "This time the employer chose other people.",
-      "cancelled": "The employer cancelled the process: {{reason}}",
-      "paid": "You were paid {{amount}} via {{method}}.",
-      "closed": "This job is no longer taking applications."
-    },
-    "application": {
-      "APPLIED": "Applied",
-      "SELECTED": "Selected",
-      "NOT_SELECTED": "Not selected",
-      "WITHDRAWN": "Withdrawn"
+      "applied": "Your application has been submitted. The employer will review applicants and notify you if you are selected.",
+      "selected": "You have been selected. Please be at {{address}} on {{date}} at {{time}} and confirm your attendance.",
+      "notSelected": "The employer has selected other candidates on this occasion.",
+      "cancelled": "The employer withdrew this vacancy.",
+      "paid": "You have received {{amount}} for this job.",
+      "closed": "This job is no longer taking applications.",
+      "confirmed": "You confirmed your attendance: be at {{address}} on {{date}} at {{time}}.",
+      "declined": "You indicated that you cannot attend.",
+      "workCancelled": "The employer cancelled your participation; it will not be paid. Reason: {{reason}}",
+      "completed": "The employer has marked your work as completed. Your payment is being processed."
     },
     "status": {
       "OPEN": "Open",
-      "IN_PROCESS": "In progress",
-      "COMPLETED": "Completed",
       "CANCELLED": "Cancelled",
-      "PAID": "Paid"
+      "FILLED": "Spots filled",
+      "CLOSED": "Closed",
+      "TO_CLOSE": "To close"
     },
     "employerKind": {
       "PERSON": "Individual",
@@ -547,33 +557,34 @@
     "tabActive": "Active",
     "tabHistory": "History",
     "noActive": "You have no active applications",
-    "noActiveHint": "Apply to a nearby job from Home.",
+    "noActiveHint": "Apply for a nearby job from Home.",
     "noHistory": "No finished jobs yet",
     "stats": {
       "open": "Open",
       "inProcess": "In progress",
-      "done": "Completed"
+      "done": "Completed",
+      "toClose": "To close"
     },
     "publish": "Post a job",
     "publishTitle": "New job",
     "published": "Job posted",
-    "informalHint": "Temporary work without a contract, 1 to 7 days. You pay when it ends.",
+    "informalHint": "Temporary work without a contract, from 1 to 7 days. Payment is made upon completion.",
     "openVacancies": "Open jobs",
     "receivingApplications": "Taking applications",
     "noOpen": "You have no open jobs",
-    "noOpenHint": "Post a job and we'll let you know when someone applies.",
+    "noOpenHint": "Post a job and you will be notified when someone applies.",
     "applicantsOf_one": "{{count}} applicant · {{needed}} needed",
     "applicantsOf_other": "{{count}} applicants · {{needed}} needed",
     "selectedCount_one": "{{count}} person selected",
     "selectedCount_other": "{{count}} people selected",
     "paidTotal": "Total paid",
     "estimatedCost": "Estimated cost",
-    "whatWork": "What is the job?",
-    "whenWork": "When and how many people?",
+    "whatWork": "Job description",
+    "whenWork": "Dates and number of people",
     "title": "Job title",
-    "descriptionHint": "What they will do, what the place is like and what to bring.",
-    "requirementHint": "E.g. safety boots",
-    "peopleNeededLabel": "People you need",
+    "descriptionHint": "Describe the tasks, the workplace and what to bring.",
+    "requirementHint": "E.g., safety boots",
+    "peopleNeededLabel": "Number of people needed",
     "startDate": "First day",
     "duration": "Duration",
     "oneWeek": "1 week",
@@ -586,9 +597,13 @@
     "sum": {
       "workers": "{{workers}} × {{days}} day(s) × {{pay}}",
       "commission": "{{brand}} fee",
-      "total": "Total to pay"
+      "total": "Total to pay",
+      "forPeople_one": "Total for {{count}} person",
+      "forPeople_other": "Total for {{count}} people",
+      "perPerson_one": "Per person ({{count}} day × {{pay}})",
+      "perPerson_other": "Per person ({{count}} days × {{pay}})"
     },
-    "payAtEnd": "Nothing is charged now: you pay when you finish the process, choosing the method for each worker.",
+    "payAtEnd": "No charge is made when posting. Each person is paid once you mark them as completed, automatically or manually according to your settings.",
     "validation": {
       "workers": "Between 1 and 20 people",
       "days": "Between 1 and 7 days",
@@ -601,7 +616,7 @@
     "selectUpTo_one": "Choose {{count}} person.",
     "selectUpTo_other": "Choose up to {{count}} people.",
     "noApplicants": "No applicants yet",
-    "noApplicantsHint": "We notified nearby workers; check back soon.",
+    "noApplicantsHint": "Nearby workers have been notified. Please check again later.",
     "demo": "Demo",
     "jobsDone_one": "{{count}} job",
     "jobsDone_other": "{{count}} jobs",
@@ -609,58 +624,53 @@
     "viability": "Fit {{value}}%",
     "selectCount_one": "Select ({{count}})",
     "selectCount_other": "Select ({{count}})",
-    "selectedToast_one": "We notified the selected person",
-    "selectedToast_other": "We notified the {{count}} selected people",
+    "selectedToast_one": "The selected person has been notified",
+    "selectedToast_other": "The {{count}} selected people have been notified",
     "selectedPeople": "Selected people",
     "cancel": "Cancel job",
     "cancelVacancy": "Cancel job",
     "cancelProcess": "Cancel process",
     "finalizeProcess": "Finish process",
     "cancelReasons": {
-      "noShow": "The people didn't show up",
-      "notFinished": "They didn't finish the work",
+      "noShow": "No-show",
+      "notFinished": "Assigned work not completed",
       "other": "Other reason"
     },
-    "cancelHint": "The people will be notified. Nothing is charged.",
+    "cancelHint": "The people will be notified. No charge will be made.",
     "cancelledToast": "Process cancelled",
     "cancelledBecause": "Cancelled: {{reason}}",
-    "readyToFinalize": "The work day is over: you can now finish and pay.",
-    "finalizeFrom": "You can finish and pay from {{date}} at {{time}}, when the last work day ends.",
-    "demoEnd": "Demo: simulate the work day ended ({{at}})",
+    "readyToFinalize": "The work period has ended. You may now finish and pay.",
+    "finalizeFrom": "You may finish and pay from {{date}} at {{time}}, when the last work day ends.",
+    "demoEnd": "Demo: simulate end of work day ({{at}})",
     "costSummary": "Cost",
     "paidSummary": "Paid",
     "finalizeTitle": "Finish and pay",
-    "finalizeHint": "Choose how you pay each person for “{{title}}”.",
+    "finalizeHint": "Select the payment method for each person for “{{title}}”.",
     "payEachWorker": "Payment to each worker",
     "methodFor": "Payment method for {{name}}",
-    "simulatedPayment": "Simulated payment: not yet connected to the payments subsystem.",
+    "simulatedPayment": "Simulated payment: payment processing is not yet enabled.",
     "payAmount": "Pay {{amount}}",
     "finalizedToast": "Process finished and paid",
     "registry": "Records",
-    "emptyRegistry": {
-      "IN_PROCESS": "No processes in progress",
-      "COMPLETED": "No finished processes yet",
-      "CANCELLED": "No cancelled processes"
-    },
     "errors": {
-      "VACANCY_NOT_FOUND": "We couldn't find this job.",
+      "VACANCY_NOT_FOUND": "This job could not be found.",
       "VACANCY_NOT_OPEN": "This job is no longer taking applications.",
-      "ALREADY_APPLIED": "You already applied to this job.",
+      "ALREADY_APPLIED": "You have already applied for this job.",
       "CANNOT_WITHDRAW": "You can no longer withdraw this application.",
-      "VACANCY_NOT_FINISHED": "The last work day hasn't ended yet.",
-      "INVALID_SELECTION": "Check how many people you selected.",
+      "VACANCY_NOT_FINISHED": "The last work day has not ended yet.",
+      "INVALID_SELECTION": "Please check the number of people selected.",
       "VACANCY_CLOSED": "This job is already closed.",
       "VACANCY_NOT_IN_PROCESS": "The job is not in progress.",
-      "ERROR": "Something went wrong."
+      "ERROR": "An error occurred. Please try again."
     },
     "notice": {
       "SELECTED": {
-        "title": "You were selected: {{title}}",
+        "title": "You have been selected: {{title}}",
         "body": "{{employer}} expects you on {{date}} at {{time}} at {{address}}."
       },
       "NOT_SELECTED": {
         "title": "Not selected: {{title}}",
-        "body": "This time they chose other people. Keep applying."
+        "body": "Other candidates were selected on this occasion. We encourage you to keep applying."
       },
       "CANCELLED": {
         "title": "Process cancelled: {{title}}",
@@ -668,30 +678,154 @@
       },
       "PAID": {
         "title": "Payment received: {{title}}",
-        "body": "You were paid {{amount}} via {{method}}."
+        "body": "You have received {{amount}} via {{method}}."
       },
       "NEW_APPLICANT": {
         "title": "New applicant: {{title}}",
-        "body": "{{name}} applied to your job."
+        "body": "{{name}} has applied for your job."
       },
       "NEARBY": {
         "title": "Job near you: {{title}}",
-        "body": "Take a look and apply."
+        "body": "Review the details and apply."
       }
     },
     "profile": {
       "title": "My résumé",
       "hint": "This is what employers see when they review applicants.",
       "photo": "Change photo",
-      "photoError": "The image couldn't be read.",
+      "photoError": "The image could not be read.",
       "experience": "Experience",
-      "experienceHint": "E.g. 2 years as a warehouse assistant.",
+      "experienceHint": "E.g., 2 years as a warehouse assistant.",
       "skills": "Skills",
-      "skillHint": "E.g. forklift operation",
+      "skillHint": "E.g., forklift operation",
       "documents": "Documents",
       "addDocument": "Upload document",
       "documentsHint": "PDF or image, up to 5 MB (certificates, courses, references).",
       "docTooBig": "A file is larger than 5 MB and was not added."
-    }
+    },
+    "whatToDo": "What needs to be done",
+    "items": "Equipment to bring",
+    "noItems": "No equipment needed.",
+    "toCloseHint": "Work ended: complete or cancel each person",
+    "hiredOf": "{{count}} of {{needed}} hired",
+    "payPerPerson": "Pay per person",
+    "readyToClose": "The work has ended. Review each person: Complete (proceeds to payment) or Cancel for absence or incomplete work.",
+    "closeFrom": "You can complete or cancel each person from {{at}}.",
+    "vacancyCancelled": "You withdrew this vacancy.",
+    "hiredPeople": "Hired people",
+    "verified": "Verified identity",
+    "paymentNote": "Payment note: {{note}}",
+    "cancelWork": "Cancel",
+    "completeWork": "Complete",
+    "completedToast": "{{name}} was marked as completed and proceeds to payment",
+    "justification": "Justification",
+    "cancelWorkHint": "Cancelling means this person will not be paid. Please state the reason.",
+    "cancelledWorkToast": "Cancelled without payment",
+    "registerPayment": "Record payment",
+    "paidToast": "Payment to {{name}} recorded",
+    "amountPaid": "Amount paid ({{currency}})",
+    "agreedAmount": "Agreed in the vacancy: {{amount}}",
+    "payLessJustification": "The amount is lower than agreed. Please provide a justification.",
+    "confirmPayment": "Confirm payment",
+    "settings": {
+      "title": "Payments to workers",
+      "autoPayout": "Automatic payment",
+      "autoOn": "On: when you select Complete, the person is paid automatically.",
+      "autoOff": "Off: you record each payment manually (paying less than agreed requires a justification)."
+    },
+    "tab": {
+      "TO_CLOSE": "To close",
+      "PAYMENTS": "Payments",
+      "OPEN": "Open",
+      "CLOSED": "Closed",
+      "CANCELLED": "Cancelled"
+    },
+    "emptyRegistry": {
+      "TO_CLOSE": "No finished vacancies to close.",
+      "PAYMENTS": "No completed people yet.",
+      "OPEN": "You have no open vacancies.",
+      "CLOSED": "No closed vacancies yet.",
+      "CANCELLED": "You have no cancelled vacancies."
+    },
+    "attendance": {
+      "question": "Can you attend?",
+      "hint": "Please confirm so the employer can count on you. If you cannot attend, the position will be offered to someone else.",
+      "yes": "Yes, I will attend",
+      "no": "I cannot",
+      "confirmedToast": "You confirmed your attendance",
+      "declinedToast": "You indicated that you cannot attend"
+    },
+    "application": {
+      "APPLIED": "Applied",
+      "SELECTED": "To confirm",
+      "CONFIRMED": "Confirmed",
+      "DECLINED": "Cannot attend",
+      "WITHDRAWN": "Withdrawn",
+      "NOT_SELECTED": "Not selected",
+      "COMPLETED": "Completed",
+      "CANCELLED": "Cancelled"
+    },
+    "hiredStatus": {
+      "SELECTED": "Waiting for attendance confirmation",
+      "CONFIRMED": "Confirmed attendance",
+      "DECLINED": "Unable to attend",
+      "WITHDRAWN": "Withdrew",
+      "COMPLETED": "Completed",
+      "CANCELLED": "Cancelled"
+    },
+    "payout": {
+      "PENDING": "Payment pending: {{amount}}",
+      "PROCESSING": "Automatic payment in progress: {{amount}}",
+      "PAID": "Paid: {{amount}}",
+      "FAILED": "Automatic payment of {{amount}} failed. Please pay manually."
+    },
+    "payoutMode": {
+      "AUTO": "Automatic",
+      "MANUAL": "Manual"
+    },
+    "payoutFilter": {
+      "ALL": "All",
+      "PENDING": "Pending",
+      "PROCESSING": "In progress",
+      "FAILED": "Failed",
+      "PAID": "Paid"
+    },
+    "closeReason": {
+      "NO_SHOW": "Absence / No-show",
+      "ABANDONED": "Did not complete the assigned work",
+      "OTHER": "Other reason"
+    },
+    "setLocation": "Save your location in your profile to receive alerts about nearby vacancies.",
+    "goToProfile": "Go to profile",
+    "employerNote": "Employer note: {{note}}",
+    "completeProfile": {
+      "title": "Complete your worker profile",
+      "hint": "Select the services you offer, your work radius and your location on the map to receive alerts about nearby vacancies.",
+      "action": "Complete profile"
+    },
+    "itemsPick": "Choose from the list",
+    "itemsWrite": "Type another item",
+    "itemSuggestions": "ID document|Health insurance card|Phone with data|Comfortable clothes|Water bottle",
+    "useBusinessAddress": "Use my business address",
+    "useProfileAddress": "Use my profile address",
+    "noProfileAddress": "Save an address in your profile to use it here with a single tap.",
+    "markOnMap": "verify the pin on the map",
+    "itemsByCategory": {
+      "cleaning": "Rubber gloves|Face mask|Comfortable clothes|Non-slip shoes|Apron",
+      "warehouse": "Safety boots|Gloves|Reflective vest|Back support belt|Helmet",
+      "construction": "Steel-toe boots|Helmet|Gloves|Safety glasses|Reflective vest|Own tools",
+      "events": "White shirt|Black trousers|Black shoes|Neat appearance",
+      "gardening": "Gloves|Boots|Cap or hat|Sunscreen|Garden tools",
+      "delivery": "Motorbike or bicycle|Driver license|Helmet|Raincoat|Delivery bag",
+      "moving": "Back support belt|Gloves|Safety boots|Comfortable clothes",
+      "painting": "Coveralls|Safety glasses|Face mask|Cap|Brushes and rollers"
+    },
+    "autoTranslated": "Automatically translated from {{language}}."
+  },
+  "clock": {
+    "choose": "Choose time",
+    "pickHour": "Select the hour (inner ring: 13 to 00)",
+    "pickMinute": "Select the minutes",
+    "done": "Done"
   }
 }

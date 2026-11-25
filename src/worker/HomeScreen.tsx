@@ -2,7 +2,7 @@ import { BadgeCheck, Bell, Briefcase, Map as MapIcon, SlidersHorizontal, Star, T
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { Chip, ErrorState, IconButton, Skeleton, StatCard, Switch } from '../design/components';
+import { Button, Chip, ErrorState, IconButton, Skeleton, StatCard, Switch } from '../design/components';
 import { formatRating, greetingKey, initials } from '../design/format';
 import { useFormat } from '../design/useFormat';
 import { ZoneMap } from '../design/ZoneMap';
@@ -22,15 +22,13 @@ export function HomeScreen() {
   const [category, setCategory] = useState<string | null>(null);
   const [showFilters, setShowFilters] = useState(false);
   const [maxKm, setMaxKm] = useState<number | null>(null);
-  const [onlyUrgent, setOnlyUrgent] = useState(false);
-
-  const open = useMemo(() => w.nearby.filter((n) => !n.mine || n.mine.status === 'WITHDRAWN'), [w.nearby]);
-  const categories = useMemo(() => [...new Set(open.map((n) => n.vacancy.categoryName))], [open]);
+  const open = useMemo(
+    () => w.nearby.filter((n) => !n.vacancy.myApplication || n.vacancy.myApplication === 'WITHDRAWN'),
+    [w.nearby],
+  );
+  const categories = useMemo(() => [...new Set(open.map((n) => n.vacancy.categoryName).filter(Boolean))], [open]);
   const shown = open.filter(
-    (n) =>
-      (!category || n.vacancy.categoryName === category) &&
-      (maxKm === null || n.distanceKm <= maxKm) &&
-      (!onlyUrgent || n.vacancy.urgent),
+    (n) => (!category || n.vacancy.categoryName === category) && (maxKm === null || n.distanceKm <= maxKm),
   );
   const available = !!w.profile?.available;
   const verified = user?.verificationState === 'VERIFIED';
@@ -52,6 +50,11 @@ export function HomeScreen() {
       </header>
 
       {!verified && <p className="tw-notice" style={{ marginBottom: 16 }}>{t('worker.notVerified')}</p>}
+      {w.profile && !w.hasBase && (
+        <p className="tw-notice" style={{ marginBottom: 16 }}>
+          {t('vac.setLocation')} <button type="button" className="link-btn" onClick={() => navigate('/profile')}>{t('vac.goToProfile')}</button>
+        </p>
+      )}
 
       {w.profile ? (
         <section className={available ? 'tw-availability' : 'tw-availability off'}>
@@ -62,19 +65,25 @@ export function HomeScreen() {
           </div>
           <Switch checked={available} disabled={w.availabilityBusy} onChange={(v) => void w.setAvailable(v)} label={t('tw.available')} />
         </section>
+      ) : w.profileMissing ? (
+        <section className="tw-card" style={{ marginBottom: 16 }} data-testid="complete-profile">
+          <strong>{t('vac.completeProfile.title')}</strong>
+          <p className="tw-note" style={{ margin: '6px 0 12px' }}>{t('vac.completeProfile.hint')}</p>
+          <Button onClick={() => navigate('/profile')} style={{ width: '100%' }}>{t('vac.completeProfile.action')}</Button>
+        </section>
       ) : w.profileError ? (
         <ErrorState message={t('tw.loadError')} retryLabel={t('tw.retry')} onRetry={() => void w.reloadProfile()} />
       ) : (
         <Skeleton height={78} style={{ marginBottom: 16 }} />
       )}
 
-      {w.stats && w.profile ? (
+      {w.profile ? (
         <div className="tw-stats">
           <StatCard icon={<TrendingUp size={20} aria-hidden="true" />} value={f.money(w.stats.weekMinor)} label={t('tw.thisWeek')} />
           <StatCard icon={<Briefcase size={20} aria-hidden="true" />} value={String(w.stats.completed)} label={t('tw.completed')} />
           <StatCard icon={<Star size={20} aria-hidden="true" />} value={formatRating(w.profile.ratingAvg)} label={t('tw.rating')} />
         </div>
-      ) : (
+      ) : w.profileMissing ? null : (
         <div className="tw-stats"><Skeleton height={96} /><Skeleton height={96} /><Skeleton height={96} /></div>
       )}
 
@@ -103,10 +112,6 @@ export function HomeScreen() {
           <label>
             {t('tw.maxDistance', { km: maxKm ?? w.radiusKm })}
             <input type="range" min={1} max={w.radiusKm} value={maxKm ?? w.radiusKm} onChange={(e) => setMaxKm(Number(e.target.value))} />
-          </label>
-          <label>
-            {t('tw.onlyUrgent')}
-            <Switch checked={onlyUrgent} onChange={setOnlyUrgent} label={t('tw.onlyUrgent')} />
           </label>
         </div>
       )}

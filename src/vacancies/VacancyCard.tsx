@@ -1,28 +1,33 @@
-import { CalendarDays, Clock, MapPin, Package, Star, Users } from 'lucide-react';
+import { CalendarDays, Clock, MapPin, Package, Users } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { Badge, CompatibilityRing, MetaRow } from '../design/components';
-import { formatRating } from '../design/format';
+import { CompatibilityRing, MetaRow } from '../design/components';
 import { useFormat } from '../design/useFormat';
-import { employerCost, workerTotal } from './logic';
-import type { Application, Vacancy } from './types';
+import { hasEnded } from './logic';
+import type { ApplicationStatus, Vacancy } from './types';
 
-/** Estado de la vacante (o de la postulación) como píldora. */
-export function VacancyStatus({ v, application }: { v: Vacancy; application?: Application }) {
+const APP_TONE: Record<ApplicationStatus, string> = {
+  APPLIED: 'open', SELECTED: 'process', CONFIRMED: 'done', DECLINED: 'muted', WITHDRAWN: 'muted',
+  NOT_SELECTED: 'muted', COMPLETED: 'done', CANCELLED: 'cancel',
+};
+
+/** Estado de la vacante (o de la postulación, si se pasa) como píldora. */
+export function VacancyStatus({ v, application }: { v: Vacancy; application?: ApplicationStatus | null }) {
   const { t } = useTranslation();
   if (application) {
-    if (application.status === 'SELECTED' && v.status === 'COMPLETED') return <span className="tw-status done">{t('vac.status.PAID')}</span>;
-    if (v.status === 'CANCELLED') return <span className="tw-status cancel">{t('vac.status.CANCELLED')}</span>;
-    const tone = { APPLIED: 'open', SELECTED: 'done', NOT_SELECTED: 'muted', WITHDRAWN: 'muted' }[application.status];
-    return <span className={`tw-status ${tone}`}>{t(`vac.application.${application.status}`)}</span>;
+    return <span className={`tw-status ${APP_TONE[application]}`}>{t(`vac.application.${application}`)}</span>;
   }
-  const tone = { OPEN: 'open', IN_PROCESS: 'process', COMPLETED: 'done', CANCELLED: 'cancel' }[v.status];
+  // Terminada con personas por cerrar: se resalta para que quien contrata finalice o cancele.
+  if (v.status === 'FILLED' || v.status === 'OPEN') {
+    if (hasEnded(v) && v.filled > 0) return <span className="tw-status process">{t('vac.status.TO_CLOSE')}</span>;
+  }
+  const tone = { OPEN: 'open', FILLED: 'process', CLOSED: 'done', CANCELLED: 'cancel' }[v.status];
   return <span className={`tw-status ${tone}`}>{t(`vac.status.${v.status}`)}</span>;
 }
 
-/** Tarjeta de vacante para el trabajador (sección 6.1): compatibilidad, empresa, lugar, fechas y pago. */
+/** Tarjeta de vacante para el trabajador: compatibilidad, empresa, lugar, fechas y pago. */
 export function WorkerVacancyCard({ v, distanceKm, match, application }: {
-  v: Vacancy; distanceKm: number; match: number; application?: Application;
+  v: Vacancy; distanceKm: number; match: number; application?: ApplicationStatus | null;
 }) {
   const { t } = useTranslation();
   const f = useFormat();
@@ -32,17 +37,9 @@ export function WorkerVacancyCard({ v, distanceKm, match, application }: {
         <div className="tw-offer-top">
           <span className="tw-cat-icon" aria-hidden="true"><Package size={22} strokeWidth={1.75} /></span>
           <div className="tw-offer-mid">
-            <div className="tw-offer-flags">
-              {v.urgent && <Badge variant="urgent">{t('tw.urgent')}</Badge>}
-              <span>{f.dates(v)}</span>
-            </div>
+            <div className="tw-offer-flags"><span>{f.dates(v)}</span></div>
             <h3 className="tw-offer-title">{v.title}</h3>
-            <div className="tw-company">
-              <span>{v.employer.name}</span>
-              {v.employer.ratingCount > 0 && (
-                <>· <Star size={14} className="star" fill="currentColor" aria-hidden="true" /><b>{formatRating(v.employer.ratingAvg)}</b></>
-              )}
-            </div>
+            <div className="tw-company"><span>{v.employer.name}</span></div>
           </div>
           <CompatibilityRing value={match} label={t('tw.compatibility', { value: match })} />
         </div>
@@ -56,20 +53,17 @@ export function WorkerVacancyCard({ v, distanceKm, match, application }: {
             {t('vac.daysCount', { count: v.days })} · {f.money(v.payPerDayMinor, v.currency, v.moneyScale)}/{t('vac.perDay')}
             {application && <> · <VacancyStatus v={v} application={application} /></>}
           </span>
-          <strong>{f.money(workerTotal(v), v.currency, v.moneyScale)}</strong>
+          <strong>{f.money(v.payMinor, v.currency, v.moneyScale)}</strong>
         </div>
       </Link>
     </li>
   );
 }
 
-/** Tarjeta de vacante para quien contrata: estado, postulados o seleccionados, fechas y costo. */
+/** Tarjeta de vacante para quien contrata: estado, cupos, fechas y lo que se pagará. */
 export function EmployerVacancyCard({ v }: { v: Vacancy }) {
   const { t } = useTranslation();
   const f = useFormat();
-  const applied = v.applications.filter((a) => a.status === 'APPLIED').length;
-  const selected = v.applications.filter((a) => a.status === 'SELECTED').length;
-  const cost = employerCost(v, v.status === 'OPEN' ? v.workersNeeded : selected);
   return (
     <li>
       <Link to={`/vacantes/${v.id}`} className="tw-card tw-offer" data-testid="employer-vacancy">
@@ -80,16 +74,15 @@ export function EmployerVacancyCard({ v }: { v: Vacancy }) {
         <div className="tw-offer-meta">
           <MetaRow icon={<CalendarDays size={16} aria-hidden="true" />}>{f.dates(v)} · {f.hours(v)}</MetaRow>
           <MetaRow icon={<Users size={16} aria-hidden="true" />}>
-            {v.status === 'OPEN'
-              ? t('vac.applicantsOf', { count: applied, needed: v.workersNeeded })
-              : t('vac.selectedCount', { count: selected })}
+            {t('vac.hiredOf', { count: v.filled, needed: v.workersNeeded })}
+            {v.applicantsCount != null && <> · {t('vac.applicants', { count: v.applicantsCount })}</>}
           </MetaRow>
           <MetaRow icon={<MapPin size={16} aria-hidden="true" />}>{v.addressText}</MetaRow>
         </div>
         <hr className="tw-sep" />
         <div className="tw-offer-foot">
-          <span>{v.status === 'COMPLETED' ? t('vac.paidTotal') : t('vac.estimatedCost')}</span>
-          <strong>{f.money(cost.total, v.currency, v.moneyScale)}</strong>
+          <span>{t('vac.payPerPerson')}</span>
+          <strong>{f.money(v.payMinor, v.currency, v.moneyScale)}</strong>
         </div>
       </Link>
     </li>

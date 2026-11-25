@@ -5,7 +5,6 @@ import { Skeleton } from './design/components';
 import { CreateVacancyScreen } from './employer/CreateVacancyScreen';
 import { EmployerHome } from './employer/EmployerHome';
 import { EmployerVacancyScreen } from './employer/EmployerVacancyScreen';
-import { FinalizeScreen } from './employer/FinalizeScreen';
 import { RegistryScreen } from './employer/RegistryScreen';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
@@ -71,7 +70,6 @@ export function App() {
 
         {/* Quien contrata (persona o comercio) */}
         <Route path="/vacantes/nueva" element={<Guard roles={EMPLOYERS}><CreateVacancyScreen /></Guard>} />
-        <Route path="/vacantes/:id/finalizar" element={<Guard roles={EMPLOYERS}><FinalizeScreen /></Guard>} />
         <Route path="/registro" element={<Guard roles={EMPLOYERS}><RegistryScreen /></Guard>} />
 
         {/* Trabajador */}

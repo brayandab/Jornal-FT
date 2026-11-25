@@ -1,27 +1,26 @@
-import {
-  Building2, CalendarDays, ChevronLeft, CircleCheck, Clock, MapPin, Share2, ShieldCheck, Star, Users,
-} from 'lucide-react';
+import { Building2, CalendarDays, ChevronLeft, CircleCheck, Clock, MapPin, Share2, Users } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ActionBar, Badge, Button, CompatibilityRing, ErrorState, IconButton, InfoTile, Skeleton } from '../design/components';
-import { formatRating } from '../design/format';
 import { useFormat } from '../design/useFormat';
 import { ZoneMap } from '../design/ZoneMap';
 import { useShell } from '../shell/ShellContext';
-import { useApp } from '../state/AppContext';
+import { vacancyApi } from '../vacancies/api';
 import { useVacancyQuery } from '../vacancies/hooks';
-import { haversineKm, matchFor, round1, workerTotal } from '../vacancies/logic';
-import { vacancyApi } from '../vacancies/mockStore';
+import { hasStarted } from '../vacancies/logic';
+import { TranslatedNote } from '../vacancies/TranslatedNote';
 import { VacancyStatus } from '../vacancies/VacancyCard';
 import { useWorker } from './WorkerContext';
 
-/** Detalle de la vacante para el trabajador (sección 6.3): de qué se trata, cuándo, cuánto paga y qué se requiere. */
+/**
+ * Detalle de la vacante para el trabajador: lugar, implementos, día y hora, qué hay que hacer y cuánto paga.
+ * Según su postulación: postularse, retirarse o el botón «¿Puedes asistir?» cuando lo contrataron.
+ */
 export function WorkerVacancyScreen() {
   const { t } = useTranslation();
   const { id = '' } = useParams();
   const navigate = useNavigate();
-  const { user } = useApp();
   const { showToast } = useShell();
   const w = useWorker();
   const f = useFormat();
@@ -44,13 +43,14 @@ export function WorkerVacancyScreen() {
   }
 
   const v = q.data;
-  const distanceKm = round1(haversineKm(w.base, { lat: v.latitude, lng: v.longitude }));
-  const categoryIds = w.profile?.categories?.map((c) => c.id) ?? [];
-  const match = matchFor(distanceKm, w.radiusKm, categoryIds.includes(v.categoryId));
-  const mine = v.applications.find((a) => a.worker.workerId === user?.id);
-  const myPayout = v.payouts?.find((p) => p.workerId === user?.id);
-  const canApply = v.status === 'OPEN' && (!mine || mine.status === 'WITHDRAWN');
-  const total = f.money(workerTotal(v), v.currency, v.moneyScale);
+  const { distanceKm, match } = w.toNearby(v);
+  const mine = v.myApplication;
+  const app = w.applications.find((a) => a.vacancyId === v.id);
+  const started = hasStarted(v);
+  const canApply = v.status === 'OPEN' && !started && (!mine || mine === 'WITHDRAWN');
+  const canWithdraw = !started && (mine === 'APPLIED' || mine === 'SELECTED' || mine === 'CONFIRMED');
+  const money = (m: number) => f.money(m, v.currency, v.moneyScale);
+  const total = money(v.payMinor);
 
   const share = async () => {
     try {
@@ -64,12 +64,11 @@ export function WorkerVacancyScreen() {
     }
   };
 
-  const run = async (kind: 'apply' | 'withdraw') => {
+  const run = async (fn: () => Promise<void>) => {
     setBusy(true);
     setError(null);
     try {
-      if (kind === 'apply') await w.apply({ vacancy: v, distanceKm, match, mine });
-      else await w.withdraw(v.id);
+      await fn();
     } catch (e) {
       setError(w.errorText(e));
     } finally {
@@ -78,20 +77,21 @@ export function WorkerVacancyScreen() {
   };
 
   // Mensaje según la etapa de la postulación
+  const when = { date: f.dayAbs(v.startDate), time: f.hour(v.startTime), address: v.addressText };
   let banner: { tone: 'ok' | 'warn' | 'info'; text: string } | null = null;
-  if (mine?.status === 'APPLIED') banner = { tone: 'info', text: t('vac.banner.applied') };
-  if (mine?.status === 'SELECTED' && v.status === 'IN_PROCESS') {
-    banner = { tone: 'ok', text: t('vac.banner.selected', { date: f.dayAbs(v.startDate), time: f.hour(v.startTime), address: v.addressText }) };
+  if (mine === 'APPLIED') banner = { tone: 'info', text: t('vac.banner.applied') };
+  if (mine === 'SELECTED') banner = { tone: 'ok', text: t('vac.banner.selected', when) };
+  if (mine === 'CONFIRMED') banner = { tone: 'ok', text: t('vac.banner.confirmed', when) };
+  if (mine === 'DECLINED') banner = { tone: 'warn', text: t('vac.banner.declined') };
+  if (mine === 'NOT_SELECTED') banner = { tone: 'warn', text: t('vac.banner.notSelected') };
+  if (mine === 'CANCELLED') banner = { tone: 'warn', text: t('vac.banner.workCancelled', { reason: app?.justification ?? '' }) };
+  if (mine === 'COMPLETED') {
+    banner = app?.payoutStatus === 'PAID'
+      ? { tone: 'ok', text: t('vac.banner.paid', { amount: money(app.paidAmountMinor ?? app.payoutMinor ?? 0) }) }
+      : { tone: 'ok', text: t('vac.banner.completed') };
   }
-  if (mine?.status === 'NOT_SELECTED') banner = { tone: 'warn', text: t('vac.banner.notSelected') };
-  if (v.status === 'CANCELLED' && mine && mine.status !== 'WITHDRAWN') banner = { tone: 'warn', text: t('vac.banner.cancelled', { reason: v.cancelReason ?? '' }) };
-  if (myPayout) {
-    banner = { tone: 'ok', text: t('vac.banner.paid', {
-      amount: f.money(myPayout.amountMinor, v.currency, v.moneyScale),
-      method: t(`payment.${myPayout.method.toLowerCase()}`, { defaultValue: myPayout.method }),
-    }) };
-  }
-  if (!banner && v.status !== 'OPEN') banner = { tone: 'warn', text: t('vac.banner.closed') };
+  if (!banner && v.status === 'CANCELLED') banner = { tone: 'warn', text: t('vac.banner.cancelled') };
+  if (!banner && !canApply) banner = { tone: 'warn', text: t('vac.banner.closed') };
 
   return (
     <div>
@@ -103,32 +103,34 @@ export function WorkerVacancyScreen() {
 
       <div className="tw-detail">
         {banner && <p className={`tw-banner ${banner.tone}`} role="status">{banner.text}</p>}
+        {app?.paymentNote && mine === 'COMPLETED' && <p className="tw-note">{t('vac.employerNote', { note: app.paymentNote })}</p>}
+
+        {mine === 'SELECTED' && !started && (
+          <section className="tw-card" aria-labelledby="attend-title" data-testid="attendance">
+            <h2 id="attend-title" className="tw-section-title" style={{ marginTop: 0 }}>{t('vac.attendance.question')}</h2>
+            <p className="tw-note">{t('vac.attendance.hint')}</p>
+            <div className="tw-two" style={{ marginTop: 12 }}>
+              <Button variant="secondary" disabled={busy} data-testid="attend-no"
+                onClick={() => void run(() => w.attendance(v.id, false))}>{t('vac.attendance.no')}</Button>
+              <Button loading={busy} data-testid="attend-yes"
+                onClick={() => void run(() => w.attendance(v.id, true))}>{t('vac.attendance.yes')}</Button>
+            </div>
+          </section>
+        )}
+
         <div className="tw-badges">
-          <Badge variant="category">{v.categoryName}</Badge>
-          {v.urgent && <Badge variant="urgent">{t('tw.urgent')}</Badge>}
+          {v.categoryName && <Badge variant="category">{v.categoryName}</Badge>}
           {mine && <VacancyStatus v={v} application={mine} />}
         </div>
         <div className="tw-title-row">
           <h1>{v.title}</h1>
           <CompatibilityRing size={52} value={match} label={t('tw.compatibility', { value: match })} />
         </div>
+        <TranslatedNote v={v} />
 
         <div className="tw-card small tw-company-card">
           <span className="box" aria-hidden="true"><Building2 size={22} strokeWidth={1.75} /></span>
-          <div>
-            <div className="name">
-              {v.employer.name}
-              {v.employer.verified && <ShieldCheck size={18} aria-label={t('tw.verifiedCompany')} />}
-            </div>
-            <div className="tw-company">
-              {v.employer.ratingCount > 0 ? (
-                <><Star size={14} className="star" fill="currentColor" aria-hidden="true" />
-                  <b>{formatRating(v.employer.ratingAvg)}</b><span>({v.employer.ratingCount})</span></>
-              ) : (
-                <span>{t(`vac.employerKind.${v.employer.kind}`)}</span>
-              )}
-            </div>
-          </div>
+          <div><div className="name">{v.employer.name}</div></div>
         </div>
 
         <div className="tw-tiles">
@@ -141,25 +143,26 @@ export function WorkerVacancyScreen() {
         <div className="tw-meta"><MapPin size={16} aria-hidden="true" /><span>{v.addressText}</span></div>
 
         <section>
-          <h2 className="tw-section-title" style={{ marginTop: 4 }}>{t('tw.description')}</h2>
+          <h2 className="tw-section-title" style={{ marginTop: 4 }}>{t('vac.whatToDo')}</h2>
           <p className="tw-paragraph">{v.description}</p>
         </section>
 
-        {v.requirements.length > 0 && (
-          <section>
-            <h2 className="tw-section-title" style={{ marginTop: 4 }}>{t('tw.requirements')}</h2>
+        <section>
+          <h2 className="tw-section-title" style={{ marginTop: 4 }}>{t('vac.items')}</h2>
+          {v.requirements.length > 0 ? (
             <ul className="tw-reqs">
               {v.requirements.map((r) => <li key={r}><CircleCheck size={20} aria-hidden="true" />{r}</li>)}
             </ul>
-          </section>
-        )}
+          ) : (
+            <p className="tw-note">{t('vac.noItems')}</p>
+          )}
+        </section>
 
         <section>
           <h2 className="tw-section-title" style={{ marginTop: 4 }}>{t('tw.payment')}</h2>
           <div className="tw-card tw-pay">
-            <div className="tw-pay-row"><span>{t('tw.payPerDay')}</span><b>{f.money(v.payPerDayMinor, v.currency, v.moneyScale)}</b></div>
+            <div className="tw-pay-row"><span>{t('tw.payPerDay')}</span><b>{money(v.payPerDayMinor)}</b></div>
             <div className="tw-pay-row"><span>{t('vac.days')}</span><b>{t('vac.daysCount', { count: v.days })}</b></div>
-            <div className="tw-pay-row"><span>{t('tw.commission', { brand: t('app.name') })}</span><b>{t('tw.paidByClient')}</b></div>
             <div className="tw-pay-row total"><span>{t('tw.youGet')}</span><b>{total}</b></div>
           </div>
         </section>
@@ -170,12 +173,12 @@ export function WorkerVacancyScreen() {
       {canApply && (
         <ActionBar>
           <Button variant="secondary" disabled={busy} onClick={back}>{t('vac.notNow')}</Button>
-          <Button data-testid="apply" loading={busy} onClick={() => void run('apply')}>{t('vac.applyFor', { amount: total })}</Button>
+          <Button data-testid="apply" loading={busy} onClick={() => void run(() => w.apply(v.id))}>{t('vac.applyFor', { amount: total })}</Button>
         </ActionBar>
       )}
-      {mine?.status === 'APPLIED' && v.status === 'OPEN' && (
+      {canWithdraw && mine !== 'SELECTED' && (
         <div className="tw-actionbar single">
-          <Button variant="secondary" loading={busy} onClick={() => void run('withdraw')}>{t('vac.withdraw')}</Button>
+          <Button variant="secondary" loading={busy} onClick={() => void run(() => w.withdraw(v.id))}>{t('vac.withdraw')}</Button>
         </div>
       )}
     </div>

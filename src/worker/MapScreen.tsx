@@ -6,7 +6,7 @@ import { useWorker } from './WorkerContext';
 export function MapScreen() {
   const { t } = useTranslation();
   const w = useWorker();
-  const open = w.nearby.filter((n) => !n.mine);
+  const open = w.nearby.filter((n) => !n.vacancy.myApplication);
   return (
     <div>
       <h1 style={{ margin: '0 0 12px' }}>{t('shell.nav.map')}</h1>

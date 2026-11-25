@@ -1,3 +1,4 @@
+import { friendlyError } from '../api/errors';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
@@ -229,9 +230,9 @@ function LocationSender({ target, onSent }: { target: Pos; onSent: (p: Pos) => v
       onSent(p);
       setError(null);
     } catch (e) {
-      setError(String((e as Error).message));
+      setError(friendlyError(e, t));
     }
-  }, [mode, target, onSent]);
+  }, [mode, target, onSent, t]);
 
   useEffect(() => { if (mode !== 'off') void tick(); }, [mode]); // eslint-disable-line react-hooks/exhaustive-deps
   useInterval(() => void tick(), mode === 'off' ? null : 7000);

@@ -21,7 +21,7 @@
   },
   "start": {
     "title": "Willkommen bei trabajoYa",
-    "subtitle": "Wähle dein Land und deine Sprache. Preise, Steuern, Zahlungsarten und Formulare folgen den Regeln des jeweiligen Landes.",
+    "subtitle": "Wählen Sie Ihr Land und Ihre Sprache. Preise, Steuern, Zahlungsarten und Formulare folgen den Regeln des jeweiligen Landes.",
     "country": "Land",
     "language": "Sprache",
     "continue": "Weiter",
@@ -35,8 +35,8 @@
     "password": "Passwort",
     "login": "Anmelden",
     "register": "Registrieren",
-    "noAccount": "Noch kein Konto?",
-    "haveAccount": "Schon ein Konto?",
+    "noAccount": "Noch kein Konto vorhanden?",
+    "haveAccount": "Bereits registriert?",
     "accountType": "Kontotyp",
     "personal": "Persönliche Daten",
     "givenName": "Vorname",
@@ -45,11 +45,11 @@
     "phoneHint": "Die Vorwahl {{prefix}} wird automatisch ergänzt",
     "acceptTerms": "Ich akzeptiere die AGB (Version {{terms}}) und die Datenschutzerklärung (Version {{privacy}}) gemäß {{law}}.",
     "createAccount": "Konto erstellen",
-    "workerVerification": "Konten von Arbeitskräften werden von einer Administratorin oder einem Administrator geprüft, bevor Angebote eingehen."
+    "workerVerification": "Konten von Arbeitskräften werden von der Administration geprüft, bevor Angebote eingehen."
   },
   "roles": {
     "APPLICANT": "Kunde",
-    "APPLICANT_hint": "Ich brauche Hilfe bei einer Arbeit",
+    "APPLICANT_hint": "Ich benötige Unterstützung bei einer Arbeit",
     "BUSINESS": "Unternehmen",
     "BUSINESS_hint": "Geschäft oder Firma, Rechnung mit USt-IdNr.",
     "WORKER": "Arbeitskraft",
@@ -65,7 +65,7 @@
     "required": "Pflichtfeld",
     "format": "Das Format ist für dieses Land ungültig",
     "passwordLength": "Mindestens 8 Zeichen",
-    "acceptTerms": "Bitte akzeptiere die Bedingungen, um fortzufahren"
+    "acceptTerms": "Bitte akzeptieren Sie die Bedingungen, um fortzufahren"
   },
   "address": {
     "title": "Adresse",
@@ -92,7 +92,15 @@
     "town": "Ortsteil (chō)",
     "block": "Block (chōme-banchi)",
     "building": "Gebäude",
-    "line": "Adresszeile"
+    "line": "Adresszeile",
+    "choose": "Option wählen",
+    "other": "Andere (eingeben)",
+    "writeOther": "Eingeben: {{field}}",
+    "pickDivisionFirst": "Wählen Sie zuerst {{division}}",
+    "streetType": "Straßenart",
+    "streetNumber": "Nummer",
+    "crossNumber": "Querstr.-Nr.",
+    "plate": "Hausnr."
   },
   "business": {
     "title": "Unternehmensprofil",
@@ -100,7 +108,7 @@
     "taxIdType": "Art der Steuernummer",
     "taxIdNumber": "Steuernummer",
     "billingAddress": "Rechnungsadresse",
-    "receiptHint": "Rechnungen für deine Aufträge werden auf diesen Firmennamen und diese Steuernummer ausgestellt."
+    "receiptHint": "Rechnungen für Ihre Aufträge werden auf diesen Firmennamen und diese Steuernummer ausgestellt."
   },
   "documents": {
     "CC": "Staatsbürgerausweis (CC)",
@@ -125,7 +133,7 @@
     "verification": "Prüfung",
     "country": "Land",
     "consent": "Datenschutz",
-    "consentOk": "Deine Einwilligung ist aktuell ({{law}}, Version {{version}}).",
+    "consentOk": "Ihre Einwilligung ist aktuell ({{law}}, Version {{version}}).",
     "consentPending": "Es gibt eine neue Version der Bedingungen ({{version}}).",
     "password": "Passwort",
     "currentPassword": "Aktuelles Passwort",
@@ -133,8 +141,8 @@
     "changePassword": "Passwort ändern"
   },
   "catalog": {
-    "hello": "Hallo {{name}}, was brauchst du?",
-    "subtitle": "Wähle eine Leistung. Die Preise sind in der Währung deines Landes.",
+    "hello": "Guten Tag, {{name}}. Wie können wir helfen?",
+    "subtitle": "Wählen Sie eine Leistung. Die Preise sind in der Währung Ihres Landes angegeben.",
     "search": "Leistungen suchen",
     "noPrice": "In diesem Land noch kein Preis"
   },
@@ -153,7 +161,7 @@
     "date": "Datum und Uhrzeit",
     "timezone": "Zeitzone",
     "timezoneHint": "Ortszeit am Einsatzort ({{zone}}).",
-    "mapHint": "Tippe auf die Karte, um den genauen Ort zu markieren.",
+    "mapHint": "Tippen Sie auf die Karte, um den genauen Ort zu markieren.",
     "myLocation": "Meinen Standort verwenden",
     "place": "Einsatzort",
     "payment": "Zahlungsart",
@@ -168,7 +176,7 @@
     "total": "Gesamt",
     "taxIncluded": "Im Preis enthalten",
     "pay": "Mit {{method}} bezahlen",
-    "payHint": "Die Zahlung wird jetzt autorisiert und belastet, wenn du den Einsatz bestätigst. Nimmt niemand an, wird sie storniert oder erstattet.",
+    "payHint": "Die Zahlung wird jetzt autorisiert und belastet, sobald Sie den Einsatz bestätigen. Nimmt niemand an, wird sie storniert oder erstattet.",
     "verifyNote": "Referenzwerte, noch zu bestätigen (VERIFICAR)."
   },
   "lines": {
@@ -200,7 +208,7 @@
     "ASSIGNED": "Arbeitskraft zugewiesen",
     "EN_ROUTE": "Unterwegs",
     "IN_PROGRESS": "In Arbeit",
-    "PENDING_CONFIRMATION": "Wartet auf deine Bestätigung",
+    "PENDING_CONFIRMATION": "Wartet auf Ihre Bestätigung",
     "COMPLETED": "Abgeschlossen",
     "CANCELLED": "Storniert",
     "FAILED": "Fehlgeschlagen",
@@ -220,7 +228,7 @@
     "created": "Auftrag erstellt. Wir suchen die nächste verfügbare Arbeitskraft.",
     "progress": "Auftragsfortschritt",
     "worker": "Arbeitskraft",
-    "yourWorker": "Deine Arbeitskraft",
+    "yourWorker": "Ihre Arbeitskraft",
     "distance": "Die Arbeitskraft ist {{distance}} entfernt",
     "live": "Live",
     "history": "Verlauf",
@@ -229,25 +237,25 @@
     "cancelHint": "Eine autorisierte Zahlung wird storniert; eine bereits belastete wird erstattet.",
     "cancelReason": "Grund",
     "cancelConfirm": "Ja, stornieren",
-    "confirmTitle": "Wurde die Arbeit erledigt?",
-    "confirmText": "Bestätige, um den Auftrag abzuschließen. Die Zahlung wird belastet und die Rechnung ausgestellt.",
+    "confirmTitle": "Wurde die Arbeit ausgeführt?",
+    "confirmText": "Bitte bestätigen Sie, um den Auftrag abzuschließen. Die Zahlung wird belastet und die Rechnung ausgestellt.",
     "confirm": "Bestätigen und bezahlen",
     "hint": {
       "PENDING_PAYMENT": "Zahlung wird autorisiert…",
       "SEARCHING_WORKER": "Angebot wird an Arbeitskräfte in der Nähe gesendet…",
       "ASSIGNED": "Die Arbeitskraft hat angenommen. Ihre Position erscheint, sobald sie losfährt.",
-      "EN_ROUTE": "Warte auf die Position der Arbeitskraft…",
+      "EN_ROUTE": "Position der Arbeitskraft wird ermittelt…",
       "IN_PROGRESS": "Die Arbeit läuft."
     }
   },
   "worker": {
-    "hello": "Hallo {{name}}",
-    "notVerified": "Dein Konto wird noch geprüft. Angebote erhältst du nach der Freigabe.",
+    "hello": "Guten Tag, {{name}}",
+    "notVerified": "Ihr Konto wartet auf Bestätigung. Sie können Stellen ansehen und sich bewerben; für die Verfügbarkeit ist eine Freigabe durch die Administration erforderlich.",
     "available": "Verfügbar",
     "unavailable": "Nicht verfügbar",
     "availableHint": "Nur verfügbare Arbeitskräfte erhalten Angebote.",
     "offers": "Angebote",
-    "noOffers": "Gerade keine Angebote. Lass diese Seite geöffnet.",
+    "noOffers": "Derzeit keine Angebote. Bitte lassen Sie diese Seite geöffnet.",
     "expiresIn": "Noch {{seconds}} s",
     "offerExpired": "Abgelaufen",
     "accept": "Annehmen",
@@ -258,7 +266,7 @@
     "radius": "Einsatzradius (km)",
     "categories": "Meine Leistungen",
     "base": "Standort",
-    "baseHint": "Tippe auf die Karte, um deinen Standort festzulegen (für Einsätze in der Nähe).",
+    "baseHint": "Tippen Sie auf die Karte, um Ihren Standort festzulegen (für Einsätze in der Nähe).",
     "nextStep": "Nächster Schritt",
     "step": {
       "en-route": "Ich bin unterwegs",
@@ -277,8 +285,8 @@
     "score": "Bewertung",
     "comment": "Kommentar (optional)",
     "send": "Bewertung senden",
-    "rateWorker": "Wie war die Arbeitskraft?",
-    "rateClient": "Wie war der Kunde?",
+    "rateWorker": "Wie bewerten Sie die Arbeitskraft?",
+    "rateClient": "Wie bewerten Sie den Kunden?",
     "direction": {
       "CLIENT_TO_WORKER": "Kunde → Arbeitskraft",
       "WORKER_TO_CLIENT": "Arbeitskraft → Kunde"
@@ -314,7 +322,7 @@
     "ready": "Bereit",
     "unacked": "Unbestätigt",
     "consumers": "Consumer",
-    "queuesUnavailable": "Die Management-API von RabbitMQ ist nicht erreichbar",
+    "queuesUnavailable": "Die Warteschlangen-Verwaltung ist derzeit nicht erreichbar",
     "deadLetters_one": "{{count}} Nachricht in der Dead-Letter-Queue",
     "deadLetters_other": "{{count}} Nachrichten in der Dead-Letter-Queue",
     "generatedAt": "Aktualisiert {{at}}",
@@ -338,7 +346,7 @@
     "translations": "Übersetzungen",
     "saveTranslation": "Übersetzung speichern",
     "region": "Länderprofil · {{code}}",
-    "verifyValues": "Dieses Profil enthält Referenzwerte mit VERIFICAR: bitte mit der offiziellen Quelle bestätigen.",
+    "verifyValues": "Dieses Profil enthält Referenzwerte mit VERIFICAR. Bitte mit der offiziellen Quelle abgleichen.",
     "summary": "Übersicht",
     "currency": "Währung",
     "decimals_one": "{{count}} Nachkommastelle",
@@ -405,11 +413,15 @@
     "page": "Seite {{page}} von {{total}}"
   },
   "errors": {
-    "generic": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
-    "network": "Keine Verbindung zum Server.",
-    "regionDown": "Der Dienst für dieses Land ist gerade nicht verfügbar. Die anderen Länder funktionieren weiter.",
-    "forbidden": "Dafür hast du keine Berechtigung.",
-    "notFound": "Nicht gefunden."
+    "generic": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
+    "network": "Es besteht keine Verbindung. Bitte prüfen Sie Ihre Internetverbindung.",
+    "regionDown": "Der Dienst für dieses Land ist derzeit nicht verfügbar. Andere Länder sind nicht betroffen.",
+    "forbidden": "Sie sind für diese Aktion nicht berechtigt.",
+    "notFound": "Der Inhalt wurde nicht gefunden.",
+    "session": "Ihre Sitzung ist abgelaufen. Bitte melden Sie sich erneut an.",
+    "conflict": "Die Informationen wurden kürzlich geändert. Bitte laden Sie die Seite neu und versuchen Sie es erneut.",
+    "invalidData": "Einige Angaben sind ungültig. Bitte prüfen Sie diese und versuchen Sie es erneut.",
+    "tooMany": "Zu viele Versuche. Bitte warten Sie einige Minuten und versuchen Sie es erneut."
   },
   "tw": {
     "nav": {
@@ -428,33 +440,33 @@
     "available": "Verfügbar",
     "unavailable": "Nicht verfügbar",
     "receiving": "Angebote im Umkreis von {{km}} km · {{zone}}",
-    "turnOn": "Einschalten, um Angebote zu erhalten",
-    "loadError": "Dein Profil konnte nicht geladen werden.",
+    "turnOn": "Aktivieren, um Angebote zu erhalten",
+    "loadError": "Ihr Profil konnte nicht geladen werden.",
     "retry": "Erneut versuchen",
     "thisWeek": "Diese Woche",
     "completed": "Erledigt",
     "rating": "Bewertung",
     "seeMap": "Auf der Karte",
-    "offersForYou": "Angebote für dich",
+    "offersForYou": "Angebote für Sie",
     "byCompatibility": "Nach Übereinstimmung",
     "filters": "Filter",
     "maxDistance": "Bis {{km}} km",
     "onlyUrgent": "Nur dringende",
     "offersError": "Angebote konnten nicht geladen werden.",
-    "noOffers": "Gerade keine Angebote in der Nähe",
-    "weWillNotify": "Wir melden uns, sobald ein neues eintrifft",
-    "activateToReceive": "Schalte deine Verfügbarkeit ein, um Angebote zu erhalten",
+    "noOffers": "Derzeit keine Angebote in der Nähe",
+    "weWillNotify": "Wir benachrichtigen Sie, sobald ein neues Angebot eingeht",
+    "activateToReceive": "Aktivieren Sie Ihre Verfügbarkeit, um Angebote zu erhalten",
     "urgent": "Dringend",
     "compatibility": "Übereinstimmung {{value}} %",
     "hoursShort": "{{hours}} Std.",
     "hoursLong_one": "{{count}} Stunde",
     "hoursLong_other": "{{count}} Stunden",
-    "newOffer": "Neues Angebot für dich · {{value}} % Übereinstimmung",
-    "respondWithin": "Du hast {{seconds}} Sekunden zum Antworten",
+    "newOffer": "Neues Angebot für Sie · {{value}} % Übereinstimmung",
+    "respondWithin": "Sie haben {{seconds}} Sekunden Zeit zu antworten",
     "accepted": "Angebot angenommen",
     "rejected": "Angebot abgelehnt",
     "viewJob": "Einsatz ansehen",
-    "offerGone": "Dieses Angebot ist nicht mehr verfügbar: Es ist abgelaufen oder jemand anderes hat es angenommen.",
+    "offerGone": "Dieses Angebot ist nicht mehr verfügbar: Es ist abgelaufen oder wurde bereits vergeben.",
     "linkCopied": "Link kopiert",
     "share": "Teilen",
     "verifiedCompany": "Geprüftes Unternehmen",
@@ -470,9 +482,9 @@
     "payPerHour": "Stundensatz",
     "commission": "{{brand}}-Provision",
     "paidByClient": "Zahlt der Auftraggeber",
-    "paidByWorker": "Zahlst du",
-    "youGet": "Du erhältst",
-    "payNote": "Die Zahlung wird deinem Guthaben gutgeschrieben, sobald der Einsatz beendet und bestätigt ist.",
+    "paidByWorker": "Zahlen Sie",
+    "youGet": "Sie erhalten",
+    "payNote": "Die Zahlung wird Ihrem Guthaben gutgeschrieben, sobald der Einsatz beendet und bestätigt ist.",
     "acceptFor": "Annehmen · {{amount}}"
   },
   "shell": {
@@ -495,16 +507,16 @@
     "unreadOne": "Ungelesen"
   },
   "vac": {
-    "alert": "Job in deiner Nähe · {{value}} % Übereinstimmung",
+    "alert": "Stelle in Ihrer Nähe · {{value}} % Übereinstimmung",
     "apply": "Bewerben",
     "applyFor": "Bewerben · {{amount}}",
-    "applied": "Du hast dich beworben",
+    "applied": "Sie haben sich beworben",
     "withdrawn": "Bewerbung zurückgezogen",
     "withdraw": "Bewerbung zurückziehen",
     "view": "Job ansehen",
     "seeDetail": "Details ansehen",
     "notNow": "Später",
-    "nearYou": "Jobs in deiner Nähe",
+    "nearYou": "Stellen in Ihrer Nähe",
     "receiving": "Jobs im Umkreis von {{km}} km",
     "mapHint_one": "{{count}} offener Job im Umkreis von {{km}} km.",
     "mapHint_other": "{{count}} offene Jobs im Umkreis von {{km}} km.",
@@ -516,27 +528,25 @@
     "people": "Personen",
     "peopleNeeded_one": "{{count}} Person",
     "peopleNeeded_other": "{{count}} Personen",
-    "payNote": "Du wirst nach getaner Arbeit bezahlt, mit der Zahlungsart, die der Auftraggeber wählt.",
+    "payNote": "Die Vergütung erfolgt, sobald die Arbeit beendet ist und der Arbeitgeber sie abschließt.",
     "banner": {
-      "applied": "Du hast dich beworben. Der Auftraggeber prüft die Bewerbungen und meldet sich, wenn er dich auswählt.",
-      "selected": "Du wurdest ausgewählt! Komm am {{date}} um {{time}} zu {{address}}.",
-      "notSelected": "Diesmal hat der Auftraggeber andere Personen ausgewählt.",
-      "cancelled": "Der Auftraggeber hat den Vorgang storniert: {{reason}}",
-      "paid": "Du hast {{amount}} per {{method}} erhalten.",
-      "closed": "Für diesen Job sind keine Bewerbungen mehr möglich."
-    },
-    "application": {
-      "APPLIED": "Beworben",
-      "SELECTED": "Ausgewählt",
-      "NOT_SELECTED": "Nicht ausgewählt",
-      "WITHDRAWN": "Zurückgezogen"
+      "applied": "Sie haben sich beworben. Der Auftraggeber prüft die Bewerbungen und benachrichtigt Sie bei einer Auswahl.",
+      "selected": "Sie wurden ausgewählt. Bitte seien Sie am {{date}} um {{time}} bei {{address}} und bestätigen Sie Ihre Teilnahme.",
+      "notSelected": "Der Auftraggeber hat dieses Mal andere Personen ausgewählt.",
+      "cancelled": "Der Arbeitgeber hat diese Stelle zurückgezogen.",
+      "paid": "Sie haben {{amount}} für diese Arbeit erhalten.",
+      "closed": "Für diesen Job sind keine Bewerbungen mehr möglich.",
+      "confirmed": "Sie haben Ihre Teilnahme bestätigt: am {{date}} um {{time}} bei {{address}}.",
+      "declined": "Sie haben mitgeteilt, dass Sie nicht teilnehmen können.",
+      "workCancelled": "Der Arbeitgeber hat Ihre Teilnahme ohne Vergütung storniert. Grund: {{reason}}",
+      "completed": "Der Arbeitgeber hat Ihre Arbeit abgeschlossen. Ihre Zahlung wird bearbeitet."
     },
     "status": {
       "OPEN": "Offen",
-      "IN_PROCESS": "Laufend",
-      "COMPLETED": "Abgeschlossen",
       "CANCELLED": "Storniert",
-      "PAID": "Bezahlt"
+      "FILLED": "Plätze besetzt",
+      "CLOSED": "Abgeschlossen",
+      "TO_CLOSE": "Abzuschließen"
     },
     "employerKind": {
       "PERSON": "Privatperson",
@@ -546,13 +556,14 @@
     "earnedTotal": "Insgesamt verdient",
     "tabActive": "Aktiv",
     "tabHistory": "Verlauf",
-    "noActive": "Du hast keine aktiven Bewerbungen",
-    "noActiveHint": "Bewirb dich auf der Startseite auf einen Job in der Nähe.",
+    "noActive": "Sie haben keine aktiven Bewerbungen",
+    "noActiveHint": "Bewerben Sie sich auf der Startseite auf eine Stelle in der Nähe.",
     "noHistory": "Noch keine abgeschlossenen Jobs",
     "stats": {
       "open": "Offen",
       "inProcess": "Laufend",
-      "done": "Abgeschlossen"
+      "done": "Abgeschlossen",
+      "toClose": "Abzuschließen"
     },
     "publish": "Job anbieten",
     "publishTitle": "Neuer Job",
@@ -560,8 +571,8 @@
     "informalHint": "Befristete Arbeit ohne Vertrag, 1 bis 7 Tage. Bezahlt wird am Ende.",
     "openVacancies": "Offene Jobs",
     "receivingApplications": "Bewerbungen möglich",
-    "noOpen": "Du hast keine offenen Jobs",
-    "noOpenHint": "Biete einen Job an – wir melden uns, sobald sich jemand bewirbt.",
+    "noOpen": "Sie haben keine offenen Stellen",
+    "noOpenHint": "Bieten Sie eine Stelle an. Wir benachrichtigen Sie, sobald Bewerbungen eingehen.",
     "applicantsOf_one": "{{count}} Bewerbung · {{needed}} gesucht",
     "applicantsOf_other": "{{count}} Bewerbungen · {{needed}} gesucht",
     "selectedCount_one": "{{count}} Person ausgewählt",
@@ -581,14 +592,18 @@
     "from": "Von",
     "to": "Bis",
     "payPerDayLabel": "Tagessatz pro Person ({{currency}})",
-    "suggestedPay": "Richtpreis in deinem Land: {{amount}}",
+    "suggestedPay": "Richtwert in Ihrem Land: {{amount}}",
     "urgentLabel": "Als dringend markieren",
     "sum": {
       "workers": "{{workers}} × {{days}} Tag(e) × {{pay}}",
       "commission": "{{brand}}-Provision",
-      "total": "Zu zahlen"
+      "total": "Zu zahlen",
+      "forPeople_one": "Summe für {{count}} Person",
+      "forPeople_other": "Summe für {{count}} Personen",
+      "perPerson_one": "Pro Person ({{count}} Tag × {{pay}})",
+      "perPerson_other": "Pro Person ({{count}} Tage × {{pay}})"
     },
-    "payAtEnd": "Jetzt wird nichts belastet: Du bezahlst am Ende und wählst die Zahlungsart für jede Person.",
+    "payAtEnd": "Bei der Veröffentlichung fallen keine Kosten an. Sie bezahlen jede Person beim Abschließen, automatisch oder manuell.",
     "validation": {
       "workers": "Zwischen 1 und 20 Personen",
       "days": "Zwischen 1 und 7 Tagen",
@@ -598,10 +613,10 @@
     "applicants_one": "{{count}} Bewerbung",
     "applicants_other": "{{count}} Bewerbungen",
     "byViability": "Nach Eignung",
-    "selectUpTo_one": "Wähle {{count}} Person.",
-    "selectUpTo_other": "Wähle bis zu {{count}} Personen.",
+    "selectUpTo_one": "Wählen Sie {{count}} Person aus.",
+    "selectUpTo_other": "Wählen Sie bis zu {{count}} Personen aus.",
     "noApplicants": "Noch keine Bewerbungen",
-    "noApplicantsHint": "Wir haben Arbeitskräfte in der Nähe benachrichtigt; schau gleich wieder vorbei.",
+    "noApplicantsHint": "Arbeitskräfte in der Nähe wurden benachrichtigt. Bitte sehen Sie später erneut nach.",
     "demo": "Demo",
     "jobsDone_one": "{{count}} Job",
     "jobsDone_other": "{{count}} Jobs",
@@ -617,50 +632,45 @@
     "cancelProcess": "Vorgang stornieren",
     "finalizeProcess": "Vorgang abschließen",
     "cancelReasons": {
-      "noShow": "Die Personen sind nicht erschienen",
-      "notFinished": "Die Arbeit wurde nicht beendet",
+      "noShow": "Nichterscheinen der Personen",
+      "notFinished": "Die Arbeit wurde nicht vollständig ausgeführt",
       "other": "Anderer Grund"
     },
     "cancelHint": "Die Personen werden benachrichtigt. Es wird nichts belastet.",
     "cancelledToast": "Vorgang storniert",
     "cancelledBecause": "Storniert: {{reason}}",
-    "readyToFinalize": "Der Arbeitstag ist vorbei: Du kannst jetzt abschließen und bezahlen.",
-    "finalizeFrom": "Abschließen und bezahlen kannst du ab {{date}} um {{time}}, wenn der letzte Arbeitstag endet.",
+    "readyToFinalize": "Der Arbeitstag ist beendet. Sie können jetzt abschließen und bezahlen.",
+    "finalizeFrom": "Abschließen und bezahlen ist ab {{date}} um {{time}} möglich, nach Ende des letzten Arbeitstags.",
     "demoEnd": "Demo: Ende des Arbeitstags simulieren ({{at}})",
     "costSummary": "Kosten",
     "paidSummary": "Bezahlt",
     "finalizeTitle": "Abschließen und bezahlen",
-    "finalizeHint": "Wähle, wie du jede Person für „{{title}}“ bezahlst.",
+    "finalizeHint": "Wählen Sie, wie Sie jede Person für „{{title}}“ bezahlen.",
     "payEachWorker": "Zahlung an jede Person",
     "methodFor": "Zahlungsart für {{name}}",
-    "simulatedPayment": "Simulierte Zahlung: noch nicht mit dem Zahlungssubsystem verbunden.",
+    "simulatedPayment": "Simulierte Zahlung: Die Zahlungsabwicklung ist noch nicht angebunden.",
     "payAmount": "{{amount}} bezahlen",
     "finalizedToast": "Vorgang abgeschlossen und bezahlt",
     "registry": "Verlauf",
-    "emptyRegistry": {
-      "IN_PROCESS": "Keine laufenden Vorgänge",
-      "COMPLETED": "Noch keine abgeschlossenen Vorgänge",
-      "CANCELLED": "Keine stornierten Vorgänge"
-    },
     "errors": {
       "VACANCY_NOT_FOUND": "Dieser Job wurde nicht gefunden.",
       "VACANCY_NOT_OPEN": "Für diesen Job sind keine Bewerbungen mehr möglich.",
-      "ALREADY_APPLIED": "Du hast dich bereits beworben.",
+      "ALREADY_APPLIED": "Sie haben sich bereits beworben.",
       "CANNOT_WITHDRAW": "Diese Bewerbung kann nicht mehr zurückgezogen werden.",
       "VACANCY_NOT_FINISHED": "Der letzte Arbeitstag ist noch nicht vorbei.",
-      "INVALID_SELECTION": "Prüfe, wie viele Personen du ausgewählt hast.",
+      "INVALID_SELECTION": "Bitte prüfen Sie die Anzahl der ausgewählten Personen.",
       "VACANCY_CLOSED": "Dieser Job ist bereits geschlossen.",
-      "VACANCY_NOT_IN_PROCESS": "Der Job läuft nicht.",
-      "ERROR": "Etwas ist schiefgelaufen."
+      "VACANCY_NOT_IN_PROCESS": "Diese Stelle ist derzeit nicht aktiv.",
+      "ERROR": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
     },
     "notice": {
       "SELECTED": {
-        "title": "Du wurdest ausgewählt: {{title}}",
-        "body": "{{employer}} erwartet dich am {{date}} um {{time}} bei {{address}}."
+        "title": "Sie wurden ausgewählt: {{title}}",
+        "body": "{{employer}} erwartet Sie am {{date}} um {{time}} bei {{address}}."
       },
       "NOT_SELECTED": {
         "title": "Nicht ausgewählt: {{title}}",
-        "body": "Diesmal wurden andere Personen ausgewählt. Bewirb dich weiter."
+        "body": "Dieses Mal wurden andere Personen ausgewählt. Weitere Stellen stehen Ihnen offen."
       },
       "CANCELLED": {
         "title": "Vorgang storniert: {{title}}",
@@ -668,15 +678,15 @@
       },
       "PAID": {
         "title": "Zahlung erhalten: {{title}}",
-        "body": "Du hast {{amount}} per {{method}} erhalten."
+        "body": "Sie haben {{amount}} per {{method}} erhalten."
       },
       "NEW_APPLICANT": {
         "title": "Neue Bewerbung: {{title}}",
-        "body": "{{name}} hat sich auf deinen Job beworben."
+        "body": "{{name}} hat sich auf Ihre Stelle beworben."
       },
       "NEARBY": {
-        "title": "Job in deiner Nähe: {{title}}",
-        "body": "Schau ihn dir an und bewirb dich."
+        "title": "Stelle in Ihrer Nähe: {{title}}",
+        "body": "Sehen Sie sich die Stelle an und bewerben Sie sich."
       }
     },
     "profile": {
@@ -692,6 +702,130 @@
       "addDocument": "Dokument hochladen",
       "documentsHint": "PDF oder Bild, bis 5 MB (Zertifikate, Kurse, Referenzen).",
       "docTooBig": "Eine Datei ist größer als 5 MB und wurde nicht hinzugefügt."
-    }
+    },
+    "whatToDo": "Was zu tun ist",
+    "items": "Mitzubringende Ausrüstung",
+    "noItems": "Keine Ausrüstung erforderlich.",
+    "toCloseHint": "Arbeit beendet: jede Person abschließen oder stornieren",
+    "hiredOf": "{{count}} von {{needed}} eingestellt",
+    "payPerPerson": "Bezahlung pro Person",
+    "readyToClose": "Die Arbeit ist beendet. Für jede Person: Abschließen (zur Zahlung) oder Stornieren bei Nichterscheinen oder nicht ausgeführter Arbeit.",
+    "closeFrom": "Ab {{at}} können Sie jede Person abschließen oder stornieren.",
+    "vacancyCancelled": "Sie haben diese Stelle zurückgezogen.",
+    "hiredPeople": "Eingestellte Personen",
+    "verified": "Identität bestätigt",
+    "paymentNote": "Zahlungsnotiz: {{note}}",
+    "cancelWork": "Stornieren",
+    "completeWork": "Abschließen",
+    "completedToast": "{{name}} wurde abgeschlossen und geht zur Zahlung",
+    "justification": "Begründung",
+    "cancelWorkHint": "Bei Stornierung erhält diese Person keine Vergütung. Bitte geben Sie eine Begründung an.",
+    "cancelledWorkToast": "Ohne Zahlung storniert",
+    "registerPayment": "Zahlung erfassen",
+    "paidToast": "Zahlung an {{name}} erfasst",
+    "amountPaid": "Gezahlter Betrag ({{currency}})",
+    "agreedAmount": "In der Stelle vereinbart: {{amount}}",
+    "payLessJustification": "Der Betrag liegt unter dem vereinbarten: Bitte begründen Sie dies",
+    "confirmPayment": "Zahlung bestätigen",
+    "settings": {
+      "title": "Zahlungen an Arbeitskräfte",
+      "autoPayout": "Automatische Zahlung",
+      "autoOn": "An: Beim Tippen auf Abschließen wird die Person automatisch bezahlt.",
+      "autoOff": "Aus: Sie erfassen jede Zahlung selbst (ein geringerer Betrag erfordert eine Begründung)."
+    },
+    "tab": {
+      "TO_CLOSE": "Abzuschließen",
+      "PAYMENTS": "Zahlungen",
+      "OPEN": "Offen",
+      "CLOSED": "Abgeschlossen",
+      "CANCELLED": "Storniert"
+    },
+    "emptyRegistry": {
+      "TO_CLOSE": "Keine beendeten Stellen abzuschließen.",
+      "PAYMENTS": "Noch keine abgeschlossenen Personen.",
+      "OPEN": "Sie haben keine offenen Stellen.",
+      "CLOSED": "Noch keine abgeschlossenen Stellen.",
+      "CANCELLED": "Sie haben keine stornierten Stellen."
+    },
+    "attendance": {
+      "question": "Können Sie teilnehmen?",
+      "hint": "Bitte bestätigen Sie, damit der Arbeitgeber planen kann. Andernfalls wird der Platz für eine andere Person frei.",
+      "yes": "Ja, ich nehme teil",
+      "no": "Nicht möglich",
+      "confirmedToast": "Sie haben Ihre Teilnahme bestätigt",
+      "declinedToast": "Sie haben Ihre Absage mitgeteilt"
+    },
+    "application": {
+      "APPLIED": "Beworben",
+      "SELECTED": "Zu bestätigen",
+      "CONFIRMED": "Bestätigt",
+      "DECLINED": "Abgesagt",
+      "WITHDRAWN": "Zurückgezogen",
+      "NOT_SELECTED": "Nicht ausgewählt",
+      "COMPLETED": "Abgeschlossen",
+      "CANCELLED": "Storniert"
+    },
+    "hiredStatus": {
+      "SELECTED": "Wartet auf Teilnahmebestätigung",
+      "CONFIRMED": "Teilnahme bestätigt",
+      "DECLINED": "Abgesagt",
+      "WITHDRAWN": "Zurückgezogen",
+      "COMPLETED": "Abgeschlossen",
+      "CANCELLED": "Storniert"
+    },
+    "payout": {
+      "PENDING": "Zahlung ausstehend: {{amount}}",
+      "PROCESSING": "Automatische Zahlung läuft: {{amount}}",
+      "PAID": "Bezahlt: {{amount}}",
+      "FAILED": "Automatische Zahlung von {{amount}} nicht erfolgt: bitte manuell zahlen"
+    },
+    "payoutMode": {
+      "AUTO": "Automatisch",
+      "MANUAL": "Manuell"
+    },
+    "payoutFilter": {
+      "ALL": "Alle",
+      "PENDING": "Ausstehend",
+      "PROCESSING": "Läuft",
+      "FAILED": "Fehlgeschlagen",
+      "PAID": "Bezahlt"
+    },
+    "closeReason": {
+      "NO_SHOW": "Nichterscheinen",
+      "ABANDONED": "Arbeit nicht vollständig ausgeführt",
+      "OTHER": "Anderer Grund"
+    },
+    "setLocation": "Speichern Sie Ihren Standort im Profil, um Hinweise zu Stellen in der Nähe zu erhalten.",
+    "goToProfile": "Zum Profil",
+    "employerNote": "Notiz des Arbeitgebers: {{note}}",
+    "completeProfile": {
+      "title": "Vervollständigen Sie Ihr Profil",
+      "hint": "Wählen Sie Ihre Leistungen, Ihren Arbeitsradius und Ihren Standort auf der Karte, um Hinweise zu Stellen in der Nähe zu erhalten.",
+      "action": "Profil vervollständigen"
+    },
+    "itemsPick": "Aus der Liste wählen",
+    "itemsWrite": "Anderen Gegenstand eingeben",
+    "itemSuggestions": "Ausweis|Krankenversicherungskarte|Mobiltelefon mit Daten|Bequeme Kleidung|Wasserflasche",
+    "useBusinessAddress": "Adresse meines Unternehmens verwenden",
+    "useProfileAddress": "Adresse aus meinem Profil verwenden",
+    "noProfileAddress": "Speichern Sie eine Adresse in Ihrem Profil, um sie hier direkt zu verwenden.",
+    "markOnMap": "Bitte prüfen Sie den Punkt auf der Karte",
+    "itemsByCategory": {
+      "cleaning": "Gummihandschuhe|Maske|Bequeme Kleidung|Rutschfeste Schuhe|Schürze",
+      "warehouse": "Sicherheitsschuhe|Handschuhe|Warnweste|Rückenstützgurt|Helm",
+      "construction": "Stahlkappenschuhe|Helm|Handschuhe|Schutzbrille|Warnweste|Eigenes Werkzeug",
+      "events": "Weißes Hemd|Schwarze Hose|Schwarze Schuhe|Gepflegtes Auftreten",
+      "gardening": "Handschuhe|Stiefel|Mütze oder Hut|Sonnencreme|Gartenwerkzeug",
+      "delivery": "Motorrad oder Fahrrad|Führerschein|Helm|Regenjacke|Lieferrucksack",
+      "moving": "Rückenstützgurt|Handschuhe|Sicherheitsschuhe|Bequeme Kleidung",
+      "painting": "Overall|Schutzbrille|Maske|Mütze|Pinsel und Rollen"
+    },
+    "autoTranslated": "Automatisch übersetzt aus: {{language}}."
+  },
+  "clock": {
+    "choose": "Uhrzeit wählen",
+    "pickHour": "Stunde wählen (innerer Ring: 13 bis 00)",
+    "pickMinute": "Minuten wählen",
+    "done": "Fertig"
   }
 }

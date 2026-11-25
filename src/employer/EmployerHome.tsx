@@ -5,21 +5,23 @@ import { Button, ErrorState, IconButton, Skeleton, StatCard } from '../design/co
 import { greetingKey, initials } from '../design/format';
 import { useShell } from '../shell/ShellContext';
 import { useApp } from '../state/AppContext';
+import { vacancyApi } from '../vacancies/api';
 import { useVacancyQuery } from '../vacancies/hooks';
-import { vacancyApi } from '../vacancies/mockStore';
+import { hasEnded } from '../vacancies/logic';
 import { EmployerVacancyCard } from '../vacancies/VacancyCard';
 
-/** Inicio de quien contrata (persona o comercio): resumen y vacantes abiertas recibiendo postulaciones. */
+/** Inicio de quien contrata (persona o comercio): resumen, vacantes por cerrar y vacantes abiertas. */
 export function EmployerHome() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { user } = useApp();
   const { unread, employer } = useShell();
-  const q = useVacancyQuery(() => (user ? vacancyApi.mine(user.id) : Promise.resolve([])), [user?.id]);
+  const q = useVacancyQuery(() => (user ? vacancyApi.mine() : Promise.resolve([])), [user?.id]);
   const all = q.data ?? [];
-  const open = all.filter((v) => v.status === 'OPEN');
-  const inProcess = all.filter((v) => v.status === 'IN_PROCESS');
-  const done = all.filter((v) => v.status === 'COMPLETED');
+  const active = all.filter((v) => v.status === 'OPEN' || v.status === 'FILLED');
+  const toClose = active.filter((v) => hasEnded(v) && v.filled > 0);
+  const open = active.filter((v) => !toClose.includes(v));
+  const done = all.filter((v) => v.status === 'CLOSED');
 
   return (
     <div>
@@ -36,7 +38,7 @@ export function EmployerHome() {
 
       <div className="tw-stats">
         <StatCard icon={<Megaphone size={20} aria-hidden="true" />} value={String(open.length)} label={t('vac.stats.open')} />
-        <StatCard icon={<ClipboardList size={20} aria-hidden="true" />} value={String(inProcess.length)} label={t('vac.stats.inProcess')} />
+        <StatCard icon={<ClipboardList size={20} aria-hidden="true" />} value={String(toClose.length)} label={t('vac.stats.toClose')} />
         <StatCard icon={<CheckCircle2 size={20} aria-hidden="true" />} value={String(done.length)} label={t('vac.stats.done')} />
       </div>
 
@@ -44,10 +46,10 @@ export function EmployerHome() {
         <Plus size={20} aria-hidden="true" /> {t('vac.publish')}
       </Button>
 
-      {inProcess.length > 0 && (
+      {toClose.length > 0 && (
         <>
-          <div className="tw-section-head"><h2>{t('vac.stats.inProcess')}</h2></div>
-          <ul className="tw-offers">{inProcess.map((v) => <EmployerVacancyCard key={v.id} v={v} />)}</ul>
+          <div className="tw-section-head"><h2>{t('vac.stats.toClose')}</h2><span>{t('vac.toCloseHint')}</span></div>
+          <ul className="tw-offers">{toClose.map((v) => <EmployerVacancyCard key={v.id} v={v} />)}</ul>
         </>
       )}
 

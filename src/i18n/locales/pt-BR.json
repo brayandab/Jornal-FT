@@ -35,8 +35,8 @@
     "password": "Senha",
     "login": "Entrar",
     "register": "Cadastre-se",
-    "noAccount": "Não tem conta?",
-    "haveAccount": "Já tem conta?",
+    "noAccount": "Ainda não possui conta?",
+    "haveAccount": "Já possui conta?",
     "accountType": "Tipo de conta",
     "personal": "Dados pessoais",
     "givenName": "Nome",
@@ -45,15 +45,15 @@
     "phoneHint": "O código {{prefix}} é adicionado automaticamente",
     "acceptTerms": "Aceito os termos (versão {{terms}}) e a política de privacidade (versão {{privacy}}) conforme a {{law}}.",
     "createAccount": "Criar conta",
-    "workerVerification": "As contas de prestador são revisadas por um administrador antes de receber ofertas."
+    "workerVerification": "As contas de prestador são revisadas por um administrador antes de receberem ofertas."
   },
   "roles": {
     "APPLICANT": "Cliente",
-    "APPLICANT_hint": "Preciso de ajuda com um trabalho",
+    "APPLICANT_hint": "Preciso contratar um serviço",
     "BUSINESS": "Empresa",
     "BUSINESS_hint": "Loja ou empresa, nota fiscal com CNPJ",
     "WORKER": "Prestador",
-    "WORKER_hint": "Quero aceitar trabalhos",
+    "WORKER_hint": "Desejo oferecer meus serviços",
     "ADMIN": "Administrador"
   },
   "verification": {
@@ -65,7 +65,7 @@
     "required": "Campo obrigatório",
     "format": "O formato não é válido para este país",
     "passwordLength": "No mínimo 8 caracteres",
-    "acceptTerms": "Você precisa aceitar os termos para continuar"
+    "acceptTerms": "É necessário aceitar os termos para continuar"
   },
   "address": {
     "title": "Endereço",
@@ -92,7 +92,15 @@
     "town": "Bairro (chō)",
     "block": "Quadra (chōme-banchi)",
     "building": "Edifício",
-    "line": "Linha de endereço"
+    "line": "Linha de endereço",
+    "choose": "Escolha uma opção",
+    "other": "Outro (digitar)",
+    "writeOther": "Digite: {{field}}",
+    "pickDivisionFirst": "Primeiro escolha {{division}}",
+    "streetType": "Tipo de via",
+    "streetNumber": "Número",
+    "crossNumber": "N.º cruzamento",
+    "plate": "Placa"
   },
   "business": {
     "title": "Perfil da empresa",
@@ -133,7 +141,7 @@
     "changePassword": "Alterar senha"
   },
   "catalog": {
-    "hello": "Olá {{name}}, do que você precisa?",
+    "hello": "Olá, {{name}}. Como podemos ajudar?",
     "subtitle": "Escolha um serviço. Os preços estão na moeda do seu país.",
     "search": "Buscar serviços",
     "noPrice": "Ainda sem preço neste país"
@@ -158,7 +166,7 @@
     "place": "Local do trabalho",
     "payment": "Forma de pagamento",
     "tip": "Gorjeta",
-    "tipPrompt": "Adicione uma gorjeta para o prestador",
+    "tipPrompt": "Adicione uma gorjeta para o prestador, se desejar",
     "tipOptional": "Gorjeta (opcional)",
     "noTip": "Sem gorjeta",
     "otherTip": "Outro valor",
@@ -168,7 +176,7 @@
     "total": "Total",
     "taxIncluded": "Incluído no preço",
     "pay": "Pagar com {{method}}",
-    "payHint": "O pagamento é autorizado agora e cobrado quando você confirmar o trabalho. Se ninguém aceitar, ele é cancelado ou reembolsado.",
+    "payHint": "O pagamento é autorizado agora e cobrado após a confirmação do trabalho. Caso ninguém aceite, ele será cancelado ou reembolsado.",
     "verifyNote": "Valores de referência pendentes de confirmação (VERIFICAR)."
   },
   "lines": {
@@ -203,7 +211,7 @@
     "PENDING_CONFIRMATION": "Aguardando sua confirmação",
     "COMPLETED": "Concluído",
     "CANCELLED": "Cancelado",
-    "FAILED": "Falhou",
+    "FAILED": "Não concluído",
     "EXPIRED": "Expirado"
   },
   "requests": {
@@ -211,13 +219,13 @@
     "jobsTitle": "Meus trabalhos",
     "filter": "Status",
     "all": "Todos",
-    "none": "Ainda não há nada aqui",
+    "none": "Não há registros no momento",
     "completedJobs": "Trabalhos concluídos",
     "earnings": "Ganhos estimados"
   },
   "tracking": {
     "title": "Acompanhamento",
-    "created": "Pedido criado. Estamos procurando o prestador disponível mais próximo.",
+    "created": "Pedido criado. Estamos buscando o prestador disponível mais próximo.",
     "progress": "Andamento do pedido",
     "worker": "Prestador",
     "yourWorker": "Seu prestador",
@@ -226,28 +234,28 @@
     "history": "Histórico",
     "captured": "cobrado",
     "cancel": "Cancelar o pedido",
-    "cancelHint": "Se o pagamento estava autorizado, ele é anulado; se já foi cobrado, é reembolsado.",
+    "cancelHint": "Se o pagamento estiver autorizado, ele será anulado; se já tiver sido cobrado, será reembolsado.",
     "cancelReason": "Motivo",
-    "cancelConfirm": "Sim, cancelar",
-    "confirmTitle": "O trabalho foi feito?",
+    "cancelConfirm": "Confirmar cancelamento",
+    "confirmTitle": "O trabalho foi realizado?",
     "confirmText": "Confirme para encerrar o pedido. O pagamento é cobrado e a nota é emitida.",
     "confirm": "Confirmar e pagar",
     "hint": {
       "PENDING_PAYMENT": "Autorizando o pagamento…",
       "SEARCHING_WORKER": "Enviando a oferta para prestadores próximos…",
-      "ASSIGNED": "O prestador aceitou. Você verá a posição dele quando sair para o local.",
+      "ASSIGNED": "O prestador aceitou. A localização dele será exibida quando ele se deslocar até o local.",
       "EN_ROUTE": "Aguardando a posição do prestador…",
       "IN_PROGRESS": "O trabalho está em andamento."
     }
   },
   "worker": {
     "hello": "Olá {{name}}",
-    "notVerified": "Sua conta está aguardando verificação. Você receberá ofertas quando um administrador aprová-la.",
+    "notVerified": "Sua conta está em verificação. É possível consultar vagas e candidatar-se; para ficar disponível, é necessária a aprovação de um administrador.",
     "available": "Disponível",
     "unavailable": "Indisponível",
-    "availableHint": "Só prestadores disponíveis recebem ofertas.",
+    "availableHint": "Somente prestadores disponíveis recebem ofertas.",
     "offers": "Ofertas",
-    "noOffers": "Nenhuma oferta no momento. Deixe esta tela aberta.",
+    "noOffers": "Não há ofertas no momento. Mantenha esta tela aberta.",
     "expiresIn": "Faltam {{seconds}} s",
     "offerExpired": "Expirada",
     "accept": "Aceitar",
@@ -261,7 +269,7 @@
     "baseHint": "Toque no mapa para definir sua localização base (usada para encontrar trabalhos próximos).",
     "nextStep": "Próximo passo",
     "step": {
-      "en-route": "Estou a caminho",
+      "en-route": "A caminho do local",
       "start": "Iniciar o trabalho",
       "finish": "Concluir o trabalho"
     },
@@ -277,8 +285,8 @@
     "score": "Nota",
     "comment": "Comentário (opcional)",
     "send": "Enviar avaliação",
-    "rateWorker": "Como foi o prestador?",
-    "rateClient": "Como foi o cliente?",
+    "rateWorker": "Como avalia o prestador?",
+    "rateClient": "Como avalia o cliente?",
     "direction": {
       "CLIENT_TO_WORKER": "Cliente → prestador",
       "WORKER_TO_CLIENT": "Prestador → cliente"
@@ -297,8 +305,8 @@
   "admin": {
     "console": "Console · {{region}}",
     "grafana": "Grafana",
-    "down": "Serviços fora do ar: {{services}}",
-    "allUp": "Todos os serviços estão no ar",
+    "down": "Serviços indisponíveis: {{services}}",
+    "allUp": "Todos os serviços estão operando normalmente",
     "today": {
       "created": "Pedidos de hoje",
       "completed": "Concluídos hoje",
@@ -314,7 +322,7 @@
     "ready": "Prontas",
     "unacked": "Sem confirmação",
     "consumers": "Consumidores",
-    "queuesUnavailable": "A API de gerenciamento do RabbitMQ não está acessível",
+    "queuesUnavailable": "Não foi possível consultar as filas no momento",
     "deadLetters_one": "{{count}} mensagem na fila de mensagens mortas",
     "deadLetters_other": "{{count}} mensagens na fila de mensagens mortas",
     "generatedAt": "Atualizado {{at}}",
@@ -338,7 +346,7 @@
     "translations": "Traduções",
     "saveTranslation": "Salvar tradução",
     "region": "Perfil do país · {{code}}",
-    "verifyValues": "Este perfil tem valores de referência marcados VERIFICAR: confirme-os com a fonte oficial.",
+    "verifyValues": "Este perfil contém valores de referência marcados como VERIFICAR. Confirme-os com a fonte oficial.",
     "summary": "Resumo",
     "currency": "Moeda",
     "decimals_one": "{{count}} casa decimal",
@@ -405,11 +413,15 @@
     "page": "Página {{page}} de {{total}}"
   },
   "errors": {
-    "generic": "Algo deu errado. Tente novamente.",
-    "network": "Sem conexão com o servidor.",
-    "regionDown": "O serviço deste país não está disponível no momento. Os outros países continuam funcionando.",
-    "forbidden": "Você não tem permissão para esta ação.",
-    "notFound": "Não encontrado."
+    "generic": "Ocorreu um erro. Tente novamente.",
+    "network": "Não foi possível conectar. Verifique sua conexão.",
+    "regionDown": "O serviço deste país está temporariamente indisponível. Os demais países operam normalmente.",
+    "forbidden": "Você não possui permissão para esta ação.",
+    "notFound": "Conteúdo não encontrado.",
+    "session": "Sua sessão foi encerrada. Entre novamente.",
+    "conflict": "As informações foram atualizadas recentemente. Atualize a página e tente novamente.",
+    "invalidData": "Alguns dados não são válidos. Revise-os e tente novamente.",
+    "tooMany": "Muitas tentativas. Aguarde alguns minutos e tente novamente."
   },
   "tw": {
     "nav": {
@@ -428,9 +440,9 @@
     "available": "Disponível",
     "unavailable": "Indisponível",
     "receiving": "Recebendo ofertas a até {{km}} km · {{zone}}",
-    "turnOn": "Ative para receber ofertas",
+    "turnOn": "Ative a disponibilidade para receber ofertas",
     "loadError": "Não foi possível carregar seu perfil.",
-    "retry": "Tentar de novo",
+    "retry": "Tentar novamente",
     "thisWeek": "Esta semana",
     "completed": "Concluídos",
     "rating": "Avaliação",
@@ -439,10 +451,10 @@
     "byCompatibility": "Por compatibilidade",
     "filters": "Filtros",
     "maxDistance": "Até {{km}} km",
-    "onlyUrgent": "Só urgentes",
+    "onlyUrgent": "Somente urgentes",
     "offersError": "Não foi possível carregar as ofertas.",
-    "noOffers": "Nenhuma oferta por perto no momento",
-    "weWillNotify": "Avisaremos quando chegar uma nova",
+    "noOffers": "Não há ofertas próximas no momento",
+    "weWillNotify": "Você será avisado quando houver uma nova",
     "activateToReceive": "Ative sua disponibilidade para receber ofertas",
     "urgent": "Urgente",
     "compatibility": "Compatibilidade {{value}}%",
@@ -454,11 +466,11 @@
     "accepted": "Oferta aceita",
     "rejected": "Oferta recusada",
     "viewJob": "Ver trabalho",
-    "offerGone": "Esta oferta não está mais disponível: expirou ou outra pessoa aceitou.",
+    "offerGone": "Esta oferta não está mais disponível: expirou ou foi aceita por outra pessoa.",
     "linkCopied": "Link copiado",
     "share": "Compartilhar",
     "verifiedCompany": "Empresa verificada",
-    "paysOnTime": "Paga em dia",
+    "paysOnTime": "Pagamentos em dia",
     "date": "Data",
     "schedule": "Horário",
     "distance": "Distância",
@@ -472,7 +484,7 @@
     "paidByClient": "Paga pelo contratante",
     "paidByWorker": "Paga por você",
     "youGet": "Você recebe",
-    "payNote": "O pagamento é liberado no seu saldo ao concluir e confirmar o trabalho.",
+    "payNote": "O pagamento é liberado no seu saldo após a conclusão e confirmação do trabalho.",
     "acceptFor": "Aceitar · {{amount}}"
   },
   "shell": {
@@ -499,7 +511,7 @@
     "apply": "Candidatar-me",
     "applyFor": "Candidatar-me · {{amount}}",
     "applied": "Você se candidatou",
-    "withdrawn": "Você retirou sua candidatura",
+    "withdrawn": "Sua candidatura foi retirada",
     "withdraw": "Retirar candidatura",
     "view": "Ver vaga",
     "seeDetail": "Ver detalhes",
@@ -516,27 +528,25 @@
     "people": "Pessoas",
     "peopleNeeded_one": "{{count}} pessoa",
     "peopleNeeded_other": "{{count}} pessoas",
-    "payNote": "Você recebe ao terminar o combinado, pelo método que a empresa escolher.",
+    "payNote": "O pagamento é feito ao término, quando o contratante marca seu trabalho como finalizado.",
     "banner": {
-      "applied": "Você se candidatou. A empresa vai analisar os candidatos e avisar se escolher você.",
-      "selected": "Você foi selecionado! Compareça em {{date}} às {{time}} em {{address}}.",
-      "notSelected": "Desta vez a empresa escolheu outras pessoas.",
-      "cancelled": "A empresa cancelou o processo: {{reason}}",
-      "paid": "Você recebeu {{amount}} via {{method}}.",
-      "closed": "Esta vaga não recebe mais candidaturas."
-    },
-    "application": {
-      "APPLIED": "Candidatado",
-      "SELECTED": "Selecionado",
-      "NOT_SELECTED": "Não selecionado",
-      "WITHDRAWN": "Retirada"
+      "applied": "Candidatura enviada. O contratante analisará os candidatos e você será avisado caso seja selecionado.",
+      "selected": "Você foi contratado. Compareça em {{address}} no dia {{date}} às {{time}}. Confirme sua presença.",
+      "notSelected": "Nesta ocasião, o contratante selecionou outros candidatos.",
+      "cancelled": "O contratante cancelou esta vaga.",
+      "paid": "Você recebeu {{amount}} por este trabalho.",
+      "closed": "Esta vaga não recebe mais candidaturas.",
+      "confirmed": "Presença confirmada: compareça em {{address}} no dia {{date}} às {{time}}.",
+      "declined": "Você informou que não poderá comparecer.",
+      "workCancelled": "O contratante cancelou sua participação, sem pagamento. Motivo: {{reason}}",
+      "completed": "O contratante finalizou seu trabalho. O pagamento está em processamento."
     },
     "status": {
       "OPEN": "Aberta",
-      "IN_PROCESS": "Em andamento",
-      "COMPLETED": "Finalizada",
       "CANCELLED": "Cancelada",
-      "PAID": "Pago"
+      "FILLED": "Vagas preenchidas",
+      "CLOSED": "Encerrada",
+      "TO_CLOSE": "A encerrar"
     },
     "employerKind": {
       "PERSON": "Pessoa física",
@@ -552,18 +562,19 @@
     "stats": {
       "open": "Abertas",
       "inProcess": "Em andamento",
-      "done": "Finalizadas"
+      "done": "Finalizadas",
+      "toClose": "A encerrar"
     },
     "publish": "Publicar vaga",
     "publishTitle": "Nova vaga",
     "published": "Vaga publicada",
-    "informalHint": "Trabalhos temporários sem contrato, de 1 a 7 dias. Você paga ao terminar.",
+    "informalHint": "Trabalhos temporários de 1 a 7 dias. O pagamento é feito ao término.",
     "openVacancies": "Vagas abertas",
     "receivingApplications": "Recebendo candidaturas",
     "noOpen": "Você não tem vagas abertas",
-    "noOpenHint": "Publique uma vaga e avisaremos quando alguém se candidatar.",
-    "applicantsOf_one": "{{count}} candidato · precisa de {{needed}}",
-    "applicantsOf_other": "{{count}} candidatos · precisa de {{needed}}",
+    "noOpenHint": "Publique uma vaga e você será avisado quando houver candidatos.",
+    "applicantsOf_one": "{{count}} candidato · necessário(s): {{needed}}",
+    "applicantsOf_other": "{{count}} candidatos · necessário(s): {{needed}}",
     "selectedCount_one": "{{count}} pessoa selecionada",
     "selectedCount_other": "{{count}} pessoas selecionadas",
     "paidTotal": "Total pago",
@@ -571,7 +582,7 @@
     "whatWork": "Qual é o trabalho?",
     "whenWork": "Quando e quantas pessoas?",
     "title": "Título da vaga",
-    "descriptionHint": "O que vão fazer, como é o local e o que devem levar.",
+    "descriptionHint": "Descreva as tarefas, o local e o que deve ser levado.",
     "requirementHint": "Ex.: botas de segurança",
     "peopleNeededLabel": "Pessoas necessárias",
     "startDate": "Primeiro dia",
@@ -586,9 +597,13 @@
     "sum": {
       "workers": "{{workers}} × {{days}} dia(s) × {{pay}}",
       "commission": "Comissão {{brand}}",
-      "total": "Total a pagar"
+      "total": "Total a pagar",
+      "forPeople_one": "Total para {{count}} pessoa",
+      "forPeople_other": "Total para {{count}} pessoas",
+      "perPerson_one": "Por pessoa ({{count}} dia × {{pay}})",
+      "perPerson_other": "Por pessoa ({{count}} dias × {{pay}})"
     },
-    "payAtEnd": "Nada é cobrado agora: você paga ao finalizar o processo, escolhendo o método para cada trabalhador.",
+    "payAtEnd": "Nada é cobrado na publicação. Cada pessoa é paga ao ser finalizada, de forma automática ou manual, conforme sua configuração.",
     "validation": {
       "workers": "Entre 1 e 20 pessoas",
       "days": "Entre 1 e 7 dias",
@@ -601,57 +616,52 @@
     "selectUpTo_one": "Escolha {{count}} pessoa.",
     "selectUpTo_other": "Escolha até {{count}} pessoas.",
     "noApplicants": "Ainda não há candidatos",
-    "noApplicantsHint": "Avisamos os trabalhadores próximos; volte daqui a pouco.",
+    "noApplicantsHint": "Os trabalhadores próximos foram avisados. Consulte novamente em breve.",
     "demo": "Demo",
     "jobsDone_one": "{{count}} trabalho",
     "jobsDone_other": "{{count}} trabalhos",
-    "sameCategory": "Faz este tipo de trabalho",
+    "sameCategory": "Possui experiência neste tipo de trabalho",
     "viability": "Adequação {{value}}%",
     "selectCount_one": "Selecionar ({{count}})",
     "selectCount_other": "Selecionar ({{count}})",
-    "selectedToast_one": "Avisamos a pessoa selecionada",
-    "selectedToast_other": "Avisamos as {{count}} pessoas selecionadas",
+    "selectedToast_one": "A pessoa selecionada foi avisada",
+    "selectedToast_other": "As {{count}} pessoas selecionadas foram avisadas",
     "selectedPeople": "Pessoas selecionadas",
     "cancel": "Cancelar vaga",
     "cancelVacancy": "Cancelar vaga",
     "cancelProcess": "Cancelar processo",
     "finalizeProcess": "Finalizar processo",
     "cancelReasons": {
-      "noShow": "As pessoas não compareceram",
-      "notFinished": "Não terminaram o trabalho",
+      "noShow": "Ausência / não comparecimento",
+      "notFinished": "O trabalho designado não foi concluído",
       "other": "Outro motivo"
     },
-    "cancelHint": "As pessoas serão avisadas. Nada é cobrado.",
+    "cancelHint": "As pessoas serão notificadas. Nenhum valor será cobrado.",
     "cancelledToast": "Processo cancelado",
     "cancelledBecause": "Cancelada: {{reason}}",
-    "readyToFinalize": "A jornada terminou: você já pode finalizar e pagar.",
+    "readyToFinalize": "A jornada foi encerrada. Já é possível finalizar e pagar.",
     "finalizeFrom": "Você poderá finalizar e pagar a partir de {{date}} às {{time}}, ao fim da última jornada.",
     "demoEnd": "Demo: simular o fim da jornada ({{at}})",
     "costSummary": "Custo",
     "paidSummary": "Pago",
     "finalizeTitle": "Finalizar e pagar",
-    "finalizeHint": "Escolha como você paga cada pessoa por “{{title}}”.",
+    "finalizeHint": "Selecione a forma de pagamento de cada pessoa por “{{title}}”.",
     "payEachWorker": "Pagamento a cada trabalhador",
     "methodFor": "Forma de pagamento para {{name}}",
-    "simulatedPayment": "Pagamento simulado: ainda não está conectado ao subsistema de pagamentos.",
+    "simulatedPayment": "Pagamento simulado: a integração com pagamentos ainda não está disponível.",
     "payAmount": "Pagar {{amount}}",
     "finalizedToast": "Processo finalizado e pago",
     "registry": "Registro",
-    "emptyRegistry": {
-      "IN_PROCESS": "Nenhum processo em andamento",
-      "COMPLETED": "Ainda não há processos finalizados",
-      "CANCELLED": "Nenhum processo cancelado"
-    },
     "errors": {
-      "VACANCY_NOT_FOUND": "Não encontramos esta vaga.",
+      "VACANCY_NOT_FOUND": "Esta vaga não foi encontrada.",
       "VACANCY_NOT_OPEN": "Esta vaga não recebe mais candidaturas.",
       "ALREADY_APPLIED": "Você já se candidatou a esta vaga.",
-      "CANNOT_WITHDRAW": "Você não pode mais retirar esta candidatura.",
+      "CANNOT_WITHDRAW": "Não é mais possível retirar esta candidatura.",
       "VACANCY_NOT_FINISHED": "A última jornada ainda não terminou.",
-      "INVALID_SELECTION": "Confira quantas pessoas você selecionou.",
+      "INVALID_SELECTION": "Verifique o número de pessoas selecionadas.",
       "VACANCY_CLOSED": "Esta vaga já está encerrada.",
       "VACANCY_NOT_IN_PROCESS": "A vaga não está em andamento.",
-      "ERROR": "Algo deu errado."
+      "ERROR": "Ocorreu um erro. Tente novamente."
     },
     "notice": {
       "SELECTED": {
@@ -660,7 +670,7 @@
       },
       "NOT_SELECTED": {
         "title": "Não selecionado: {{title}}",
-        "body": "Desta vez escolheram outras pessoas. Continue se candidatando."
+        "body": "Nesta ocasião, outros candidatos foram selecionados. Continue se candidatando."
       },
       "CANCELLED": {
         "title": "Processo cancelado: {{title}}",
@@ -681,7 +691,7 @@
     },
     "profile": {
       "title": "Meu currículo",
-      "hint": "É o que as empresas veem ao analisar os candidatos.",
+      "hint": "Estas informações são exibidas aos contratantes durante a análise dos candidatos.",
       "photo": "Trocar foto",
       "photoError": "Não foi possível ler a imagem.",
       "experience": "Experiência",
@@ -691,7 +701,131 @@
       "documents": "Documentos",
       "addDocument": "Enviar documento",
       "documentsHint": "PDF ou imagem, até 5 MB (certificados, cursos, referências).",
-      "docTooBig": "Algum arquivo passa de 5 MB e não foi adicionado."
-    }
+      "docTooBig": "Um ou mais arquivos excedem 5 MB e não foram adicionados."
+    },
+    "whatToDo": "O que precisa ser feito",
+    "items": "Equipamentos para levar",
+    "noItems": "Não é necessário levar equipamentos.",
+    "toCloseHint": "Trabalho encerrado: finalize ou cancele cada pessoa",
+    "hiredOf": "{{count}} de {{needed}} contratados",
+    "payPerPerson": "Pagamento por pessoa",
+    "readyToClose": "O trabalho foi encerrado. Revise cada pessoa: Finalizar (segue para pagamento) ou Cancelar em caso de ausência ou trabalho não concluído.",
+    "closeFrom": "Você poderá finalizar ou cancelar cada pessoa a partir de {{at}}.",
+    "vacancyCancelled": "Esta vaga foi cancelada por você.",
+    "hiredPeople": "Pessoas contratadas",
+    "verified": "Identidade verificada",
+    "paymentNote": "Observação do pagamento: {{note}}",
+    "cancelWork": "Cancelar",
+    "completeWork": "Finalizar",
+    "completedToast": "{{name}} foi finalizado e vai para o pagamento",
+    "justification": "Justificativa",
+    "cancelWorkHint": "Ao cancelar, esta pessoa não receberá pagamento. Descreva o ocorrido.",
+    "cancelledWorkToast": "Cancelado sem pagamento",
+    "registerPayment": "Registrar pagamento",
+    "paidToast": "Pagamento a {{name}} registrado",
+    "amountPaid": "Valor pago ({{currency}})",
+    "agreedAmount": "Combinado na vaga: {{amount}}",
+    "payLessJustification": "Valor inferior ao combinado: informe a justificativa",
+    "confirmPayment": "Confirmar pagamento",
+    "settings": {
+      "title": "Pagamentos aos trabalhadores",
+      "autoPayout": "Pagamento automático",
+      "autoOn": "Ativo: ao selecionar Finalizar, o pagamento à pessoa é feito automaticamente.",
+      "autoOff": "Inativo: você registra cada pagamento (valores inferiores ao combinado exigem justificativa)."
+    },
+    "tab": {
+      "TO_CLOSE": "A encerrar",
+      "PAYMENTS": "Pagamentos",
+      "OPEN": "Abertas",
+      "CLOSED": "Encerradas",
+      "CANCELLED": "Canceladas"
+    },
+    "emptyRegistry": {
+      "TO_CLOSE": "Não há vagas concluídas pendentes de encerramento.",
+      "PAYMENTS": "Ainda não há pessoas finalizadas.",
+      "OPEN": "Você não tem vagas abertas.",
+      "CLOSED": "Ainda não há vagas encerradas.",
+      "CANCELLED": "Você não tem vagas canceladas."
+    },
+    "attendance": {
+      "question": "Você pode comparecer?",
+      "hint": "Confirme para que o contratante conte com sua presença. Caso não possa, a vaga será liberada para outra pessoa.",
+      "yes": "Sim, comparecerei",
+      "no": "Não poderei comparecer",
+      "confirmedToast": "Você confirmou sua presença",
+      "declinedToast": "Você informou que não poderá comparecer"
+    },
+    "application": {
+      "APPLIED": "Candidatado",
+      "SELECTED": "A confirmar",
+      "CONFIRMED": "Confirmado",
+      "DECLINED": "Não poderá comparecer",
+      "WITHDRAWN": "Retirado",
+      "NOT_SELECTED": "Não selecionado",
+      "COMPLETED": "Finalizado",
+      "CANCELLED": "Cancelado"
+    },
+    "hiredStatus": {
+      "SELECTED": "Aguardando confirmação de presença",
+      "CONFIRMED": "Confirmou presença",
+      "DECLINED": "Informou que não poderá comparecer",
+      "WITHDRAWN": "Desistiu",
+      "COMPLETED": "Finalizado",
+      "CANCELLED": "Cancelado"
+    },
+    "payout": {
+      "PENDING": "Pagamento pendente: {{amount}}",
+      "PROCESSING": "Pagamento automático em andamento: {{amount}}",
+      "PAID": "Pago: {{amount}}",
+      "FAILED": "Não foi possível concluir o pagamento automático de {{amount}}: efetue-o manualmente"
+    },
+    "payoutMode": {
+      "AUTO": "Automático",
+      "MANUAL": "Manual"
+    },
+    "payoutFilter": {
+      "ALL": "Todos",
+      "PENDING": "Pendentes",
+      "PROCESSING": "Em andamento",
+      "FAILED": "Com falha",
+      "PAID": "Pagos"
+    },
+    "closeReason": {
+      "NO_SHOW": "Ausência / não comparecimento",
+      "ABANDONED": "Não concluiu o trabalho designado",
+      "OTHER": "Outro motivo"
+    },
+    "setLocation": "Salve sua localização no perfil para receber avisos de vagas próximas.",
+    "goToProfile": "Ir ao perfil",
+    "employerNote": "Observação do contratante: {{note}}",
+    "completeProfile": {
+      "title": "Complete seu perfil de trabalhador",
+      "hint": "Selecione os serviços que oferece, seu raio de atuação e sua localização no mapa para receber avisos de vagas próximas.",
+      "action": "Completar perfil"
+    },
+    "itemsPick": "Escolher da lista",
+    "itemsWrite": "Digitar outro item",
+    "itemSuggestions": "Documento de identidade|Carteirinha de saúde|Celular com dados|Roupa confortável|Garrafa de água",
+    "useBusinessAddress": "Usar o endereço da minha empresa",
+    "useProfileAddress": "Usar o endereço do meu perfil",
+    "noProfileAddress": "Salve um endereço no seu perfil para utilizá-lo aqui.",
+    "markOnMap": "verifique o ponto no mapa",
+    "itemsByCategory": {
+      "cleaning": "Luvas de borracha|Máscara|Roupa confortável|Sapatos antiderrapantes|Avental",
+      "warehouse": "Botas de segurança|Luvas|Colete refletivo|Cinta lombar|Capacete",
+      "construction": "Botas com biqueira de aço|Capacete|Luvas|Óculos de segurança|Colete refletivo|Ferramentas próprias",
+      "events": "Camisa branca|Calça preta|Sapatos pretos|Boa apresentação",
+      "gardening": "Luvas|Botas|Boné ou chapéu|Protetor solar|Ferramentas de jardim",
+      "delivery": "Moto ou bicicleta|Carteira de motorista|Capacete|Capa de chuva|Bag de entrega",
+      "moving": "Cinta lombar|Luvas|Botas de segurança|Roupa confortável",
+      "painting": "Macacão|Óculos de segurança|Máscara|Boné|Pincéis e rolos"
+    },
+    "autoTranslated": "Traduzido automaticamente do {{language}}."
+  },
+  "clock": {
+    "choose": "Escolher hora",
+    "pickHour": "Toque a hora (anel interno: 13 a 00)",
+    "pickMinute": "Toque os minutos",
+    "done": "Pronto"
   }
 }
