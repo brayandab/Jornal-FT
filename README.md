@@ -35,6 +35,8 @@ En desarrollo, Vite reenvía `/api` y `/subsystems` (también el WebSocket) al g
 
 Build de producción: `npm run build`, que deja todo en `dist/`. Ese contenido lo sirve cualquier servidor estático, siempre que reenvíe `/api` y `/subsystems` al gateway.
 
+Sin gateway (por ejemplo en Render), las URLs del backend se fijan al compilar con variables de Vite (`src/config.ts`, ejemplo en `.env.example`): `VITE_API_BASE_URL` (core; `{region}` se reemplaza por la región), `VITE_NOTIFICATIONS_URL` (bandeja y avisos), `VITE_WS_URL` (WebSocket STOMP) y `VITE_REGIONS` (países del selector). Sin variables se usa el gateway como siempre. El servidor estático debe reescribir cualquier ruta (`/*`) a `/index.html`, porque la app usa React Router con `BrowserRouter`.
+
 ## Usuarios de prueba
 
 Los crea `scripts/seed-demo.sh` en cada región (`co`, `br`, `us`, `fr`, `jp`):

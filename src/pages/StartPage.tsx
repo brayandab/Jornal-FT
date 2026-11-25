@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../api/endpoints';
+import { REGIONS } from '../config';
 import { ErrorBox, Loading, Select } from '../components/ui';
 import { LOCALE_NAMES, UI_LOCALES, resolveUiLocale } from '../i18n';
 import { useAsync } from '../lib/useAsync';
@@ -13,7 +14,7 @@ export function StartPage() {
   const { region, locale, chooseRegion, setLocale } = useApp();
   const navigate = useNavigate();
   const countries = useAsync(() => api.countries(), [locale]);
-  const [picked, setPicked] = useState<string | null>(region);
+  const [picked, setPicked] = useState<string | null>(region ?? (REGIONS.length === 1 ? REGIONS[0] : null));
 
   const pick = (code: string, defaultLocale: string) => {
     setPicked(code.toLowerCase());

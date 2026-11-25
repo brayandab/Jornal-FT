@@ -1,7 +1,8 @@
+import { coreUrl, subsystemUrl } from '../config';
 import type { Problem, TokenResponse } from './types';
 
 /**
- * Cliente HTTP de la app. Todo va por el gateway con rutas relativas:
+ * Cliente HTTP de la app. Las URLs base salen de src/config.ts (variables VITE_...). Por defecto, el gateway:
  *   core:        /api/{región}/...
  *   subsistemas: /subsystems/{payments|dispatch|notifications|billing}/...
  * Cada petición lleva Authorization, Accept-Language y X-Correlation-Id. Ante un 401 intenta
@@ -102,7 +103,7 @@ async function refresh(): Promise<boolean> {
   if (!refreshToken || !region) return false;
   refreshing ??= (async () => {
     try {
-      const res = await fetch(`/api/${region}/auth/refresh`, {
+      const res = await fetch(`${coreUrl(region)}/auth/refresh`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ refreshToken }),
@@ -169,18 +170,18 @@ async function send(url: string, opts: RequestOptions, retry: boolean): Promise<
 /** Petición al core de la región de la sesión. */
 export function core<T>(path: string, opts: RequestOptions = {}): Promise<T> {
   if (!state.region) throw new ApiError({ status: 0, code: 'NO_REGION' });
-  return send(`/api/${state.region}${path}`, opts, true) as Promise<T>;
+  return send(`${coreUrl(state.region)}${path}`, opts, true) as Promise<T>;
 }
 
 /** Petición al core de una región concreta (selector de país, antes de iniciar sesión). */
 export function coreOf<T>(region: string, path: string, opts: RequestOptions = {}): Promise<T> {
-  return send(`/api/${region}${path}`, opts, true) as Promise<T>;
+  return send(`${coreUrl(region)}${path}`, opts, true) as Promise<T>;
 }
 
 export type Subsystem = 'payments' | 'dispatch' | 'notifications' | 'billing';
 
 export function sub<T>(name: Subsystem, path: string, opts: RequestOptions = {}): Promise<T> {
-  return send(`/subsystems/${name}${path}`, opts, true) as Promise<T>;
+  return send(`${subsystemUrl(name)}${path}`, opts, true) as Promise<T>;
 }
 
 /** Lee el contenido (sin validar la firma) del access token: sub, role, region. */

@@ -2,21 +2,17 @@ import { Client } from '@stomp/stompjs';
 import type { IMessage, StompSubscription } from '@stomp/stompjs';
 import { useEffect, useRef } from 'react';
 import { session } from '../api/client';
+import { notificationsWsUrl } from '../config';
 
 /**
- * Tiempo real por WebSocket (STOMP) con el subsistema de notificaciones, a través del gateway:
- *   /subsystems/notifications/ws, JWT en el header Authorization del CONNECT.
+ * Tiempo real por WebSocket (STOMP) con el subsistema de notificaciones: por defecto a través del gateway
+ * (/subsystems/notifications/ws) o en VITE_WS_URL. JWT en el header Authorization del CONNECT.
  * Temas: /topic/users.<id> (avisos de la persona) y /topic/requests.<id> (estado y ubicación del pedido).
  */
 
 let client: Client | null = null;
 const handlers = new Map<string, Set<(body: unknown) => void>>();
 const subscriptions = new Map<string, StompSubscription>();
-
-function wsUrl(): string {
-  const proto = location.protocol === 'https:' ? 'wss' : 'ws';
-  return `${proto}://${location.host}/subsystems/notifications/ws`;
-}
 
 function subscribeTopic(topic: string) {
   if (!client?.connected || subscriptions.has(topic)) return;
@@ -37,7 +33,7 @@ function subscribeTopic(topic: string) {
 function ensureClient() {
   if (client) return;
   client = new Client({
-    brokerURL: wsUrl(),
+    brokerURL: notificationsWsUrl(),
     reconnectDelay: 3000,
     heartbeatIncoming: 10000,
     heartbeatOutgoing: 10000,

@@ -1,3 +1,4 @@
+import { REGIONS } from '../config';
 import { core, coreOf, sub, uuid } from './client';
 import type {
   Address, AddressRequest, AdminCategory, Business, BusinessRequest, Category, Console, Country,
@@ -15,8 +16,8 @@ const qs = (params: Record<string, string | number | undefined | null>) => {
   return s ? `?${s}` : '';
 };
 
-// Regiones que el gateway enruta (Alemania entró solo con datos, como sexto país).
-export const REGIONS = ['co', 'br', 'us', 'fr', 'jp', 'de'] as const;
+// Regiones disponibles: VITE_REGIONS (por defecto las 6 que enruta el gateway; Alemania entró solo con datos).
+export { REGIONS };
 
 export const api = {
   // ---------------------------------------------------------- región y país
@@ -24,7 +25,9 @@ export const api = {
     // Cualquier core responde la lista de países; si una región está caída se prueba la siguiente.
     for (const r of REGIONS) {
       try {
-        return await coreOf<Country[]>(r, '/countries', { anonymous: true });
+        const all = await coreOf<Country[]>(r, '/countries', { anonymous: true });
+        // Solo los países cuya región está desplegada (en Render, solo Colombia).
+        return all.filter((c) => REGIONS.includes(c.code.toLowerCase()));
       } catch {
         // siguiente región
       }
